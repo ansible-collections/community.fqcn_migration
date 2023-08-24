@@ -43,7 +43,7 @@
 
     - name: "Git clone {{ project_git_url }} into {{ project_root_folder }}"
       ansible.builtin.include_role:
-        name: community.fqcn_migration.git
+        name: git
         tasks_from: clone.yml
       when:
         - project_root_folder is defined
@@ -52,14 +52,14 @@
   tasks:
     - name: "Run FQCN migration"
       ansible.builtin.include_role:
-        name: community.fqcn_migration
+        name: fqcn_migration
       tags: always
 
   post_tasks:
 
     - name: "Peform release (if requested)."
       ansible.builtin.include_role:
-        name: community.fqcn_migration.release
+        name: release
 
     - name: "Build collection for {{ downstream_name }}"
       command: ansible-galaxy collection build .
