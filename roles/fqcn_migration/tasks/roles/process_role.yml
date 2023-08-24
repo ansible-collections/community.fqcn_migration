@@ -1,0 +1,61 @@
+---
+- name: "Ensure all required parameters have been provided"
+  ansible.builtin.assert:
+    that:
+      - role_folder is defined
+      - role_folder.isdir is defined and role_folder.isdir
+      - role_folder.path is defined
+      - upstream_name is defined and upstream_name != ""
+      - downstream_name is defined and downstream_name != ""
+    quiet: true
+    fail_msg: "Invalid or unexpected metadata in role directory: {{ role_folder }}"
+
+- name: "Extract role name from folder name: {{ role_folder.path }}"
+  ansible.builtin.set_fact:
+    rolename: "{{ item.path | basename }}"
+
+- name: "Extract overrides from argument_specs"
+  ansible.builtin.set_fact:
+    downstream_defaults: "{{ (lookup('file',role_folder.path+'/meta/argument_specs.yml') | from_yaml).argument_specs.downstream.options | default({}) }}"
+
+### disabled for now as collections does not yet complies to this
+- name: "{{ fqcn_migration_strict_role_name }} Check that role name '{{ rolename }}' begin with '{{ upstream_name }}'."
+  ansible.builtin.assert:
+    that:
+      - rolename is defined
+      - upstream_name in rolename
+    quiet: true
+    fail_msg: "Invald rolename: {{ rolename }}"
+  when:
+    - fqcn_migration_strict_role_name is defined
+    - fqcn_migration_strict_role_name
+    - to_fix is defined
+#TODO fix logic above
+
+- name: "Define downstream rolename"
+  ansible.builtin.set_fact:
+    downstream_rolename: "{{ (rolename | replace(upstream_name,downstream_name)) if downstream_name != rolename else rolename }}"
+
+- name: "Ensure downstream_rolename has been defined"
+  ansible.builtin.assert:
+    that:
+      - downstream_rolename is defined and downstream_rolename != ""
+    quiet: true
+    fail_msg: "Can't define downstream_rolename from rolename: {{ rolename }}"
+
+- name: "Define path to downstream role"
+  ansible.builtin.set_fact:
+    downstream_role_path: "{{ downstream_project }}/roles/{{ downstream_rolename }}"
+
+- name: "Rename role '{{ rolename }}' from {{ role_folder.path }} to {{ downstream_project }}/roles//{{ downstream_rolename }}"
+  ansible.builtin.shell: |
+    git mv roles/{{ rolename }} roles/{{ downstream_rolename }}
+  args:
+    chdir: "{{ downstream_project }}"
+  when:
+    - downstream_rolename != rolename
+
+- name: "Rename all upstream variables from '{{ upstream_name }}' prefix to '{{ downstream_name }}' prefix."
+  ansible.builtin.include_tasks: roles/rewrite_role_vars.yml
+  vars:
+    path_role_folder: "{{ downstream_role_path }}"

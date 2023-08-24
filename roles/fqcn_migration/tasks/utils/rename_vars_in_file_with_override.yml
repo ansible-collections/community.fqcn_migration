@@ -1,0 +1,49 @@
+---
+- set_fact:
+    upstream_value: "{{ upstream_name }}"
+  when:
+    - not upstream_value is defined
+
+- set_fact:
+    downstream_value: "{{ downstream_name }}"
+  when:
+    - not downstream_value is defined
+
+- name: "Replace all occurences of upstream '{{ upstream_value }}' to downstream '{{ downstream_value }}' in '{{ path_to_file }}'"
+  ansible.builtin.replace:
+    path: "{{ path_to_file }}"
+    regexp: "{{ upstream_value }}"
+    replace: "{{ downstream_value }}"
+    #validate: "python -c 'import yaml, sys; print(yaml.safe_load(sys.stdin))'"
+  when:
+    - path_to_file is exists
+
+- name: "Override upstream with downstream defaults in '{{ path_to_file }}'"
+  ansible.builtin.lineinfile:
+    path: "{{ path_to_file }}"
+    regexp: "^{{ downstream_default.key }}:.*$"
+    line: "{{ downstream_default.key }}: {{ downstream_default.value.default }}"
+  when:
+    - downstream_defaults | length > 0
+    - path_to_file is exists
+    - "'defaults/main.yml' in path_to_file"
+    - downstream_default.value is defined and downstream_default.value.default is defined
+    - not downstream_default.value.default | default('') is search('\{\{')
+  loop: "{{ downstream_defaults | default({}) | dict2items | default([]) }}"
+  loop_control:
+    loop_var: downstream_default
+
+- name: "Override upstream with downstream defaults in '{{ path_to_file }}'"
+  ansible.builtin.lineinfile:
+    path: "{{ path_to_file }}"
+    regexp: "^{{ downstream_default.key }}:.*$"
+    line: "{{ downstream_default.key }}: \"{{ downstream_default.value.default }}\""
+  when:
+    - downstream_defaults | length > 0
+    - path_to_file is exists
+    - downstream_default.value is defined and downstream_default.value.default is defined
+    - "'defaults/main.yml' in path_to_file"
+    - downstream_default.value.default | default('') is search('\{\{')
+  loop: "{{ downstream_defaults | default({}) | dict2items | default([]) }}"
+  loop_control:
+    loop_var: downstream_default

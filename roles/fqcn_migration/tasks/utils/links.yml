@@ -1,0 +1,26 @@
+---
+- name: Turn github PR links into automation hub links to github (3)
+  ansible.builtin.include_tasks: utils/rename_vars_in_file.yml
+  vars:
+    path_to_file: "{{ downstream_project }}/docs/CHANGELOG.md"
+    upstream_value: "https://github.com/{{ upstream_organisation }}/{{ downstream_name }}"
+    downstream_value: "https://github.com/{{ upstream_organisation }}/{{ upstream_collection_name | default(upstream_name, true) }}"
+
+- name: Remove docs/README symlink to root README
+  ansible.builtin.file:
+    state: absent
+    path: "{{ downstream_project }}/docs/README.md"
+
+- name: Turn github doc links into automation hub relative links
+  ansible.builtin.include_tasks: utils/rename_vars_in_file.yml
+  vars:
+    path_to_file: "{{ downstream_project }}/README.md"
+    upstream_value: "https://github.com/{{ upstream_organisation }}/{{ downstream_name }}/blob/main/roles/{{ downstream_name }}"
+    downstream_value: "content/role/{{ downstream_name }}"
+
+- name: Turn github doc links into automation hub relative links (2)
+  ansible.builtin.include_tasks: utils/rename_vars_in_file.yml
+  vars:
+    path_to_file: "{{ downstream_project }}/README.md"
+    upstream_value: "https://github.com/{{ upstream_organisation }}/{{ downstream_name }}/tree/main/roles/{{ downstream_name }}"
+    downstream_value: "content/role/{{ downstream_name }}"

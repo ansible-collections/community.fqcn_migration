@@ -1,0 +1,8 @@
+---
+- name: "Ensure git project home folder is defined."
+  ansible.builtin.assert:
+    that:
+      - downstream_project is defined
+      - git_command is defined
+    quiet: True
+    fail_msg: "Missing required parameters."

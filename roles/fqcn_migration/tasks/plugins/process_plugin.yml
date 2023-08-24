@@ -1,0 +1,26 @@
+---
+- name: "Extract plugin name from file path: {{ path_to_file }}"
+  ansible.builtin.set_fact:
+    pluginname: "{{ path_to_file | basename }}"
+    pluginsdir: "{{ path_to_file | regex_replace('(.*/plugins/).*','\\1') }}"
+
+- name: "Define downstream plugin name"
+  ansible.builtin.set_fact:
+    downstream_pluginname: "{{ (pluginname | replace(upstream_name,downstream_name)) }}"
+
+- name: "Define path to downstream plugin"
+  ansible.builtin.set_fact:
+    downstream_pluginpath: "{{ pluginsdir }}{{ path_to_file | dirname | replace(pluginsdir,'') | replace(upstream_name,downstream_name) }}/{{ downstream_pluginname }}"
+
+- name: "Ensure downstream plugin file directory exists"
+  ansible.builtin.file:
+    path: "{{ downstream_pluginpath | dirname }}"
+    state: directory
+  when: path_to_file != downstream_pluginpath
+
+- name: "Rename plugin '{{ path_to_file }}' to '{{ downstream_pluginpath }}'"
+  ansible.builtin.shell: |
+    git mv -f {{ path_to_file }} {{ downstream_pluginpath }}
+  args:
+    chdir: "{{ downstream_project }}"
+  when: path_to_file != downstream_pluginpath

@@ -1,0 +1,55 @@
+---
+- assert:
+    that:
+      - project_root_folder is defined
+      - downstream_project is defined
+    quiet: True
+    fail_msg: "Missing required parameters."
+
+- set_fact:
+    path_to_playbooks_dir: "{{ project_root_folder }}/playbooks"
+    path_to_playbooks_dir_dest: "{{ downstream_project }}/playbooks"
+
+- name: "Load metadata on folder {{ path_to_playbooks_dir }}"
+  ansible.builtin.stat:
+    path: "{{ path_to_playbooks_dir }}"
+  register: is_playbook_dir
+
+- block:
+    - name: "List all playbooks within {{ path_to_playbooks_dir_dest }}"
+      ansible.builtin.find:
+        paths: "{{ path_to_playbooks_dir_dest }}"
+        recurse: no
+        patterns: '*.yml'
+      register: downstream_playbooks
+
+    - ansible.builtin.include_tasks: playbooks/rename.yml
+      vars:
+        path_to_playbook_file: "{{ playbook_file.path }}"
+      loop: "{{ downstream_playbooks.files }}"
+      loop_control:
+        loop_var: playbook_file
+  when:
+    - is_playbook_dir.stat.exists
+
+- name: "List all roles within {{ downstream_project }}/roles"
+  ansible.builtin.find:
+    paths: "{{ downstream_project }}/roles"
+    recurse: no
+    file_type: directory
+  register: downstream_roles
+
+- assert:
+    that:
+      - downstream_roles is defined
+    quiet: True
+    fail_msg: "Internal error, can't list roles within: {{ downstream_project }}/roles"
+
+- ansible.builtin.include_tasks: roles/switch_role_dependency_to_downstream.yml
+  vars:
+    path_to_meta_main_yml: "{{ downstream_role_dir.path }}/meta/main.yml"
+  loop: "{{ downstream_roles.files }}"
+  loop_control:
+    loop_var: downstream_role_dir
+  when:
+    - downstream_roles.files is defined

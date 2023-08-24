@@ -1,0 +1,14 @@
+---
+- name: "Ensure required parameters are provided"
+  ansible.builtin.assert:
+    that:
+      - file_to_remove is defined
+      - downstream_project is defined
+    quiet: True
+    fail_msg: "Missing required parameters."
+
+# TODO: to be moved into the git role
+- ansible.builtin.shell: |
+    git rm -rf {{ file_to_remove }}
+  args:
+    chdir: "{{ downstream_project }}"

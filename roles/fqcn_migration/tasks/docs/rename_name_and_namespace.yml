@@ -1,0 +1,15 @@
+---
+- ansible.builtin.assert:
+    that:
+      - path_to_file is defined
+      - upstream_namespace is defined
+      - downstream_namespace is defined
+    quiet: True
+    fail_msg: "Missing required parameters."
+
+- ansible.builtin.include_tasks: utils/rename_vars_in_file.yml
+
+- ansible.builtin.include_tasks: utils/rename_vars_in_file.yml
+  vars:
+    upstream_value: "{{ upstream_namespace }}"
+    downstream_value: "{{ downstream_namespace }}"

@@ -1,0 +1,15 @@
+---
+- name: "Ensure required parameters are defined."
+  ansible.builtin.assert:
+    that:
+     - remote_name is defined
+     - local_branch is defined
+     - remote_branch is defined
+    quiet: True
+
+- name: "Define git command to execute."
+  ansible.builtin.set_fact:
+    git_command: "push {{ remote_name }} {{ local_branch }}:{{ remote_branch }}"
+
+- name: "Execute git command '{{ git_command }}'"
+  ansible.builtin.include_tasks: run_git_command.yml

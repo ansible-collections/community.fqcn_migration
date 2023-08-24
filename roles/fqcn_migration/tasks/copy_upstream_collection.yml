@@ -1,0 +1,18 @@
+---
+- ansible.builtin.assert:
+    that:
+      - src is defined
+      - dest is defined
+    quiet: true
+    fail_msg: 'Missing required parameters'
+
+- name: Ensure rsync is installed
+  ansible.builtin.yum:
+    name: rsync
+    use_backend: dnf
+  become: yes
+
+- name: "rsync {{ src }} to {{ dest }}"
+  ansible.posix.synchronize:
+    src: "{{ src }}"
+    dest: "{{ dest }}"

@@ -1,0 +1,18 @@
+---
+- name: "Ensure required parameters are provided"
+  ansible.builtin.assert:
+    that:
+      - project_git_url is defined
+      - project_root_folder is defined
+    quiet: True
+    fail_msg: "Missing required parameters"
+
+- name: "Git clone {{ project_git_url }} into {{ project_root_folder }}"
+  ansible.builtin.git:
+    repo: "{{ project_git_url }}"
+    dest: "{{ project_root_folder }}"
+    version: "{{ project_git_version | default(omit) }}"
+  register: git_clone_res
+  retries: 3
+  delay: 15
+  until: not git_clone_res.failed

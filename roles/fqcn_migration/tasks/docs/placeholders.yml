@@ -1,0 +1,24 @@
+---
+- name: "Replace placeholder '{{ downstream_content.placeholder }}' in '{{ path_to_file }}'"
+  ansible.builtin.replace:
+    path: "{{ path_to_file }}"
+    regexp: "^<!--start {{ downstream_content.placeholder }} -->(.|[\n])*<!--end {{ downstream_content.placeholder }} -->$"
+    replace: "{{ downstream_content.content }}"
+  loop: "{{ downstream_placeholder_content }}"
+  loop_control:
+    loop_var: downstream_content
+    label: "{{ downstream_content.placeholder + ' in ' + path_to_file }}"
+  when:
+    - path_to_file is exists
+
+- name: "Deleting placeholder '{{ downstream_delete }}' in '{{ path_to_file }}'"
+  ansible.builtin.replace:
+    path: "{{ path_to_file }}"
+    regexp: "^<!--start {{ downstream_delete }} -->(.|[\n])*<!--end {{ downstream_delete }} -->$"
+    replace: ''
+  loop: "{{ downstream_placeholder_delete }}"
+  loop_control:
+    loop_var: downstream_delete
+    label: "{{ downstream_delete + ' in ' + path_to_file }}"
+  when:
+    - path_to_file is exists

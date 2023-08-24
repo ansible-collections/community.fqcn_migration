@@ -1,0 +1,29 @@
+---
+- assert:
+    that:
+      - path_to_meta_main_yml is defined
+    quiet: true
+    fail_msg: 'Missing required parameter.'
+
+- stat:
+    path: "{{ path_to_meta_main_yml }}"
+  register: is_meta_main_yml
+
+- assert:
+    that:
+      - is_meta_main_yml is defined
+      - is_meta_main_yml.stat is defined
+      - is_meta_main_yml.stat.exists is defined
+    quiet: true
+    fail_msg: "Invalid path provided : {{ path_to_meta_main_yml }}."
+
+- ansible.builtin.include_tasks: utils/replace_name_and_namespace.yml
+  vars:
+    path_to_file: "{{ path_to_meta_main_yml }}"
+  when:
+    - is_meta_main_yml.stat.exists
+
+- ansible.builtin.debug:
+    msg: "INFO: role has no meta/main.yml ({{ path_to_meta_main_yml }})"
+  when:
+    - not is_meta_main_yml.stat.exists

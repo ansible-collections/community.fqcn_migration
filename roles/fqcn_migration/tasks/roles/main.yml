@@ -1,0 +1,12 @@
+---
+- name: "List all roles within {{ project_root_folder }}/roles"
+  ansible.builtin.find:
+    paths: "{{ project_root_folder }}/roles"
+    recurse: no
+    file_type: directory
+  register: upstream_roles
+
+- ansible.builtin.include_tasks: roles/process_role.yml
+  vars:
+    role_folder: "{{ item }}"
+  loop: "{{ upstream_roles.files }}"

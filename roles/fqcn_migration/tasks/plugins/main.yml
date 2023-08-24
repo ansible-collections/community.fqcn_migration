@@ -1,0 +1,20 @@
+---
+- name: Generate a list of Python plugins
+  ansible.builtin.find:
+    paths: "{{ downstream_project }}/plugins/"
+    file_type: file
+    patterns: '*.py'
+    recurse: yes
+  register: plugin_results
+
+- name: Update plugins (ensures EXAMPLES will have correct FQCNs)
+  ansible.builtin.include_tasks: utils/replace_name_and_namespace.yml
+  vars:
+    path_to_file: "{{ item.path }}"
+  loop: "{{ plugin_results.files }}"
+
+- name: Process plugin file
+  ansible.builtin.include_tasks: process_plugin.yml
+  vars:
+    path_to_file: "{{ item.path }}"  
+  loop: "{{ plugin_results.files }}"

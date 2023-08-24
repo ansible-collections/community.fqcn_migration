@@ -1,0 +1,16 @@
+---
+- ansible.builtin.find:
+    paths: "{{ molecule_dir }}"
+    recurse: yes
+    patterns: '*.yml,*.j2'
+  register: molecule_yaml
+
+- ansible.builtin.include_tasks: roles/replace_deps_to_upstream_name_to_downstream.yml
+  vars:
+    path_to_file: "{{ item.path }}"
+  loop: "{{ molecule_yaml.files }}"
+
+- ansible.builtin.include_tasks: utils/replace_name_and_namespace.yml
+  vars:
+    path_to_file: "{{ item.path }}"
+  loop: "{{ molecule_yaml.files }}"

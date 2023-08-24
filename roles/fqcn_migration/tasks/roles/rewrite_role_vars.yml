@@ -1,0 +1,42 @@
+---
+- name: "Checks that required parameters have been provided"
+  ansible.builtin.assert:
+    that:
+      - path_role_folder is defined
+      - upstream_name is defined
+      - downstream_name is defined
+    quiet: true
+    fail_msg: "Missing required parameters (path to role)"
+
+- name: "Find all YAML files (.yml)  and Jinja templates (.j2) contained in role {{ path_role_folder }}"
+  ansible.builtin.find:
+    paths: "{{ path_role_folder }}"
+    patterns: '*.yml,*.j2,*.md'
+    recurse: yes
+  register: all_files_to_update
+
+- ansible.builtin.assert:
+    that:
+      - all_files_to_update is defined
+      - all_files_to_update.files is defined
+      - all_files_to_update.files | length > 0
+    quiet: true
+    fail_msg: "No file found in role folder {{ path_role_folder }}."
+
+- name: "Rename dependencies in tasks and templates"
+  ansible.builtin.include_tasks: roles/replace_deps_to_upstream_name_to_downstream.yml
+  vars:
+    path_to_file: "{{ file_to_update.path }}"
+  loop: "{{ all_files_to_update.files }}"
+  loop_control:
+    loop_var: file_to_update
+  when: file_to_update != 'meta/argument_specs.yml'
+
+- name: "Rename vars in vars,defaults and meta"
+  ansible.builtin.include_tasks: utils/replace_name_and_namespace.yml
+  vars:
+    path_to_file: "{{ file_to_update.path }}"
+  loop: "{{ all_files_to_update.files }}"
+  loop_control:
+    loop_var: file_to_update
+  when: file_to_update != 'meta/argument_specs.yml'

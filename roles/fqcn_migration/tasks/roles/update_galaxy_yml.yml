@@ -1,0 +1,49 @@
+---
+- name: "Set path to downstream galaxy.yml"
+  ansible.builtin.set_fact:
+    downstream_galaxy_yml: "{{ downstream_project }}/galaxy.yml"
+
+- name: "Slurp galaxy.yml"
+  ansible.builtin.slurp:
+    src: "{{ downstream_project }}/galaxy.yml"
+  register: galaxy_yml
+
+- name: "Slurp galaxy collection version"
+  ansible.builtin.set_fact:
+    galaxy_version: "{{ override_galaxy_version | default((galaxy_yml.content | b64decode | from_yaml)['version'], true) }}"
+
+- name: "Copy galaxy.yml from {{ upstream_project }} to {{ downstream_project }}"
+  ansible.builtin.copy:
+    src: "{{ project_root_folder }}/galaxy.yml"
+    dest: "{{ downstream_galaxy_yml }}"
+
+- name: "Update galaxy.yml to downstream namespace"
+  ansible.builtin.replace:
+    path: "{{ downstream_galaxy_yml }}"
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+    #validate: "python -c 'import yaml, sys; print(yaml.safe_load(sys.stdin))'"
+  loop:
+    - { regexp: "^(namespace: ).*$", replace: "\\1{{ downstream_namespace }}" }
+    - { regexp: "^(name: ).*$", replace: "\\1{{ downstream_name }}" }
+    # Replace in all other lines, except issues: and repository: as this would break repo links
+    - { regexp: "^(\\w*: )((?<!issues: )|(?<!repository: )){{ upstream_namespace }}", replace: "\\1{{ downstream_namespace }}" }
+
+- name: "Replace galaxy.yml {{ item }}"
+  ansible.builtin.replace:
+    path: "{{ downstream_galaxy_yml }}"
+    regexp: "^{{ item }}: .*"
+    replace: "{{ item }}: {{ galaxy[item] }}"
+  loop:
+    - homepage
+    - documentation
+  when: galaxy is defined and galaxy[item] is defined
+
+- ansible.builtin.include_tasks: roles/replace_deps_to_upstream_name_to_downstream.yml
+  vars:
+    path_to_file: "{{ file_to_update }}"
+  loop:
+    - "{{ downstream_galaxy_yml }}"
+    - "{{ downstream_project }}/requirements.yml"
+  loop_control:
+    loop_var: file_to_update

@@ -1,0 +1,67 @@
+---
+- name: "FQCN migration process"
+  hosts: localhost
+  gather_facts: no
+  collections:
+    - community.fqcn_migration
+  vars:
+    upstream_name: "{{ lookup('env', 'PROJECT_UPSTREAM_NAME') }}"
+    downstream_name: "{{ lookup('env', 'PROJECT_NAME') }}"
+    upstream_collection_name: "{{ lookup('env', 'UPSTREAM_COLLECTION_NAME') | default(upstream_name) }}"
+    project_git_url: "{{ lookup('env', 'GIT_REPOSITORY_URL') }}"
+    project_git_version: "{{ lookup('env', 'GIT_REPOSITORY_BRANCH') }}"
+    upstream_namespace:  "community"
+    downstream_namespace: "ansible"
+    workdir: "{{ lookup('env', 'PWD') }}"
+    upstream_projects_dir: "{{ workdir }}/upstream"
+    downstream_projects_dir: "{{ workdir }}/downstream"
+    downstream_repository_host_env_varname: 'INTERNAL_GIT_REPOSITORY_URL'
+    skip_setup: True
+  pre_tasks:
+    - name: "Ensure all required parameters have been provided"
+      tags: always
+      ansible.builtin.assert:
+        that:
+          - downstream_name is defined
+          - upstream_name is defined
+          - project_git_url is defined
+        quiet: True
+        fail_msg: "Missing required parameter(s)."
+
+    - name: "Determine full path to project folder (if not provided)."
+      tags: always
+      ansible.builtin.set_fact:
+        project_root_folder: "{{ lookup('env', 'PWD') }}/upstream/{{ upstream_name }}.git"
+      when:
+        - not project_root_folder is defined
+        - upstream_name is defined
+
+    - name: "Define path to downstream project"
+      tags: always
+      ansible.builtin.set_fact:
+        downstream_project: "{{ downstream_projects_dir }}/{{ downstream_name }}"
+
+    - name: "Git clone {{ project_git_url }} into {{ project_root_folder }}"
+      ansible.builtin.include_role:
+        name: community.fqcn_migration.git
+        tasks_from: clone.yml
+      when:
+        - project_root_folder is defined
+        - project_git_url is defined
+
+  tasks:
+    - name: "Run FQCN migration"
+      ansible.builtin.include_role:
+        name: community.fqcn_migration
+      tags: always
+
+  post_tasks:
+
+    - name: "Peform release (if requested)."
+      ansible.builtin.include_role:
+        name: community.fqcn_migration.release
+
+    - name: "Build collection for {{ downstream_name }}"
+      command: ansible-galaxy collection build .
+      args:
+        chdir: "{{ downstream_project }}"

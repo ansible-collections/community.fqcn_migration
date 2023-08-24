@@ -1,0 +1,20 @@
+---
+- set_fact:
+    upstream_value: "{{ upstream_name }}"
+  when:
+    - not upstream_value is defined
+
+- set_fact:
+    downstream_value: "{{ downstream_name }}"
+  when:
+    - not downstream_value is defined
+
+- name: "Replace all occurences of upstream '{{ upstream_value }}' to downstream '{{ downstream_value }}' in '{{ path_to_file }}'"
+  ansible.builtin.replace:
+    path: "{{ path_to_file }}"
+    regexp: "{{ upstream_value }}"
+    replace: "{{ downstream_value }}"
+    #validate: "python -c 'import yaml, sys; print(yaml.safe_load(sys.stdin))'"
+  when:
+    - path_to_file is exists
+    - upstream_value != downstream_value

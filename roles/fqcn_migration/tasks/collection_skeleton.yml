@@ -1,0 +1,71 @@
+---
+- name: "Ensure required parameter(s) are provided."
+  ansible.builtin.assert:
+    that:
+      - downstream_project is defined
+    quiet: True
+    fail_msg: "Missing required parameter(s)."
+
+- name: "Ensure downstream project folder {{ downstream_project }} exists."
+  ansible.builtin.file:
+    path: "{{ downstream_project }}"
+    state: directory
+
+- name: "Copy all files from {{ project_root_folder }} to {{ downstream_project }}"
+  ansible.builtin.include_tasks: copy_upstream_collection.yml
+  vars:
+    src: "{{ project_root_folder }}/"
+    dest: "{{ downstream_project }}"
+
+- name: "Load downstream dependencies from requirements.yml"
+  block:
+    - name: "Load requirements.yml content"
+      ansible.builtin.slurp:
+        src: "{{ downstream_project }}/requirements.yml"
+      register: used_deps
+
+    - name: Intersect dependency map with declared dependencies
+      ansible.builtin.set_fact:
+        depmap: "{{ (depmap | default([])) + (used_deps['content'] | b64decode | from_yaml)['collections'] | map(attribute='name') | default([]) }}"
+  rescue:
+    - ansible.builtin.debug:
+        msg: "Couldn't load dependency map from requirements.yml: file does not exist"
+
+- name: Check if .github folders exist in {{ downstream_project }}."
+  ansible.builtin.stat:
+    path: "{{ downstream_project }}/.github"
+  register: github_dir
+
+- name: "Delete .github folders in {{ downstream_project }}."
+  ansible.builtin.include_tasks: remove_from_collection.yml
+  vars:
+    file_to_remove: "{{ item }}"
+  loop:
+    - "{{ downstream_project }}/.github"
+  when: github_dir.stat.exists
+
+- ansible.builtin.include_tasks: roles/replace_deps_to_upstream_name_to_downstream.yml
+  vars:
+    path_to_file: "{{ filepath }}"
+  loop:
+    - "{{ downstream_project }}/README.md"
+    - "{{ downstream_project }}/CHANGELOG.rst"
+    - "{{ downstream_project }}/requirements.yml"
+    - "{{ downstream_project }}/meta/runtime.yml"
+  loop_control:
+    loop_var: filepath
+
+- ansible.builtin.include_tasks: utils/replace_name_and_namespace.yml
+  vars:
+    path_to_file: "{{ filepath }}"
+  loop:
+    - "{{ downstream_project }}/README.md"
+    - "{{ downstream_project }}/CHANGELOG.rst"
+    - "{{ downstream_project }}/requirements.yml"
+    - "{{ downstream_project }}/meta/runtime.yml"
+  loop_control:
+    loop_var: filepath
+
+- ansible.builtin.include_tasks: utils/convert_rst_to_md.yml
+  vars:
+    path_to_file: "{{ downstream_project }}/docs/CHANGELOG.rst"

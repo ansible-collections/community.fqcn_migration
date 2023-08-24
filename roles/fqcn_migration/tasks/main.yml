@@ -1,0 +1,66 @@
+---
+- ansible.builtin.include_tasks: utils/check_required_parameters.yml
+  tags: always
+  args: 
+    apply:
+      tags: always  
+
+- ansible.builtin.include_tasks: utils/check_dir_exists.yml
+  tags: always
+  args: 
+    apply:
+      tags: always  
+  vars:
+    path_to_dir: "{{ project_root_folder }}"
+
+- ansible.builtin.include_tasks: collection_skeleton.yml
+  tags: always
+  args: 
+    apply:
+      tags: skeleton
+
+- ansible.builtin.include_tasks: roles/update_galaxy_yml.yml
+  tags: always
+  args: 
+    apply:
+      tags: galaxy
+
+- ansible.builtin.include_tasks: docs/main.yml
+  tags: always
+  args: 
+    apply:
+      tags: docs
+  vars:
+    path_to_docs_folder: "{{ downstream_project }}/docs"
+
+- ansible.builtin.include_tasks: plugins/main.yml
+  tags: always
+  args: 
+    apply:
+      tags: plugins
+
+- ansible.builtin.include_tasks: roles/main.yml
+  tags: always
+  args: 
+    apply:
+      tags: roles
+
+- ansible.builtin.include_tasks: playbooks/main.yml
+  tags: always
+  args: 
+    apply:
+      tags: playbooks
+
+- ansible.builtin.include_tasks: molecule.yml
+  tags: always
+  args: 
+    apply:
+      tags: molecule
+  vars:
+    molecule_dir: "{{ downstream_project }}/molecule"
+
+- ansible.builtin.include_tasks: utils/links.yml
+  tags: always
+  args: 
+    apply:
+      tags: links

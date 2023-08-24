@@ -1,0 +1,21 @@
+---
+- ansible.builtin.assert:
+    that:
+      - path_to_dir is defined
+    quiet: True
+    fail_msg: "Missing required parameters."
+
+- ansible.builtin.stat:
+    path: "{{ path_to_dir }}"
+  register: is_path_to_dir
+
+- ansible.builtin.assert:
+    that:
+      - is_path_to_dir is defined
+      - is_path_to_dir.stat is defined
+      - is_path_to_dir.stat.exists is defined
+      - is_path_to_dir.stat.exists
+      - is_path_to_dir.stat.isdir is defined
+      - is_path_to_dir.stat.isdir
+    quiet: True
+    fail_msg: "Invalid path to dir: {{ path_to_dir }}."

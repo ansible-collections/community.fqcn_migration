@@ -1,0 +1,31 @@
+---
+namespace: community
+name: fqcn_migration
+version: "1.0.0"
+readme: README.md
+authors:
+  - Romain Pelisse <belaran@redhat.com>
+  - Guido Grazioli <ggraziol@redhat.com>
+description: FQCN migration is a transformation process to turns an upstream Ansible collection (community.play_helpers) into a downstream one (ansible.helpers).
+license_file: "LICENSE"
+tags: [collection, ansible, release, git, tools]
+dependencies:
+  ansible.posix: ">=1.3.0"
+repository: https://github.com/ansible-collections/community.fqcn_migration
+documentation: https://ansible-collections.github.io/community.fqcn_migration
+homepage: https://github.com/ansible-collections/community.fqcn_migration
+issues: https://github.com/ansible-collections/community.fqcn_migration/issues
+build_ignore:
+  - molecule
+  - .github
+  - '*.tar.gz'
+  - '*.zip'
+  - changelogs/fragments/.gitignore
+  - .gitignore
+  - changelogs
+  - docs/_gh_include
+  - docs/conf.py
+  - docs/roles.rst.template
+  - docs/requirements.yml
+  - upstream
+  - downstream

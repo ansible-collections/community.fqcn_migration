@@ -1,0 +1,74 @@
+argument_specs:
+    main:
+        options:
+            upstream_name:
+                type: 'str'
+                required: yes
+                description: "The prefix for roles in the upstream collection to transform"
+            downstream_name:
+                type: 'str'
+                required: yes
+                description: "The name of the downstream collection to generate"
+            upstream_collection_name:
+                type: 'str'
+                required: no
+                default: "{{ upstream_name }}"
+                description: "Optional name of upstream collection"
+            project_git_url:
+                type: 'str'
+                required: no
+                description: "If provided, the git url used to fetch the upstream project repository"
+            project_git_version:
+                type: 'str'
+                required: no
+                description: "If provided along project_git_url, the branch to fetch the upstream project from"
+            upstream_namespace:
+                type: 'str'
+                default: "community"
+                description: "Name of the upstream namespace to transform"
+            downstream_namespace:
+                type: 'str'
+                default: "ansible"
+                description: "Name of the downstream namespace to generate the collection into"
+            workdir:
+                type: 'str'
+                default: "{{ lookup('env', 'PWD') }}"
+                description: "Working directory to run the transformation process onto"
+            upstream_projects_dir:
+                type: 'str'
+                default: "{{ workdir }}/upstream"
+                description: "Directory where the upstream project is cloned from git"
+            downstream_projects_dir:
+                type: 'str'
+                default: "{{ workdir }}/downstream"
+                description: "Directory where the downstream collection will be generated"
+            skip_setup:
+                type: 'bool'
+                default: True
+                description: "Whether to skip the pre-transformation setup phase"
+            post_processors_replacements:
+                type: 'list'
+                default: []
+                description: "List of { match, replace, file } dicts for post processing replacements. `match` and `replace` are regexes for string replacements while `file` is a regex matcher filtering filenames to post-process"
+            upstream_downstream_collections_map:
+                type: 'list'
+                default: []
+                description: "List of dependency mappings {upstream_name, downstream_name} for renaming in tasks, galaxy.yml and requirements.yml"
+            upstream_organisation:
+                type: 'str'
+                default: 'ansible-collections'
+                description: 'github.com organisation for upstream repositories'
+            downstream_placeholder_delete:
+                type: 'list'
+                default: []
+                description: "List of placeholder comments for removing upstream only documentation snippets"
+            # anything inside <!--start {{ downstream_placeholder_content }} --> and <!--end {{ downstream_placeholder_content }} --> will be replaced with content
+            downstream_placeholder_content:
+                type: 'list'
+                default: []
+                description: "List of placeholder comments used to add/replace downstream documentation snippets. List of dict(placeholder:str,content:str)"
+            override_galaxy_version:
+                type: 'str'
+                required: no
+                default: ''
+                description: 'Set to override value of downstream version read from galaxy.yml'

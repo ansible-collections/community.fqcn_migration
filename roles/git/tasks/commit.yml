@@ -1,0 +1,13 @@
+---
+- name: "Ensure required parameters are defined."
+  ansible.builtin.assert:
+    that:
+      - message is defined
+    quiet: True
+
+- name: "Define git command to execute."
+  ansible.builtin.set_fact:
+    git_command: commit -m {{ message }} -a
+
+- name: "Execute git command '{{ git_command }}'"
+  ansible.builtin.include_tasks: run_git_command.yml

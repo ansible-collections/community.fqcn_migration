@@ -1,0 +1,28 @@
+---
+- name: "Ensure project home is defined."
+  ansible.builtin.include_tasks: git_project_home.yml
+
+- ansible.builtin.shell: |
+    git {{ git_command }}
+  args:
+    chdir: "{{ downstream_project }}"
+  register: git_command_result
+
+- ansible.builtin.debug:
+    var: git_command_result
+  when:
+    - git.display_command_result
+
+- name: "Verify that command was successfully executed."
+  ansible.builtin.assert:
+    that:
+      - git_command_result is defined
+      - git_command_result.rc is defined
+      - git_command_result.stdout is defined
+    quiet: True
+
+- name: "Display result of command 'git {{ git_command }}'. (if any)"
+  ansible.builtin.debug:
+    var: git_command_result.stdout
+  when:
+    - git_command_result.stdout | length > 0

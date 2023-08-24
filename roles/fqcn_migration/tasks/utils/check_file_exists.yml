@@ -1,0 +1,7 @@
+---
+- assert:
+    that:
+      - path_to_file is defined
+      - path_to_file is exists
+    quiet: True
+    fail_msg: "Missing required parameters or file not found."
