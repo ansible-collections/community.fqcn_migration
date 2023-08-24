@@ -1,6 +1,12 @@
 ---
 - ansible.builtin.import_playbook: ./fqcn_migration.yml
   vars:
+    upstream_name: jws
+    downstream_name: jws
+    upstream_collection_name: middleware_automation
+    downstream_collection_name: redhat
+    project_git_url: 'https://github.com/ansible-middleware/jws'
+    project_git_version: main
     # replace galaxy metadata links
     galaxy:
       documentation: https://access.redhat.com/documentation/en-us/red_hat_jboss_web_server
