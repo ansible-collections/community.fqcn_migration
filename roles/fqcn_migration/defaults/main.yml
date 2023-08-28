@@ -1,6 +1,4 @@
 ---
-upstream_name:
-downstream_name:
 upstream_collection_name: "{{ upstream_name }}"
 project_git_url:
 project_git_version:
