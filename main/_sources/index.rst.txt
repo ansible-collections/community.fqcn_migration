@@ -1,7 +1,7 @@
 .. FQCN Migration Ansible Collection documentation main file
 
-Welcome to community.fqcn_migration Collection documentation
-=========================================
+community.fqcn_migration collection documentation
+=================================================
 
 .. toctree::
    :maxdepth: 2
