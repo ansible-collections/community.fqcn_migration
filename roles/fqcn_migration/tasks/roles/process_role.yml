@@ -15,8 +15,17 @@
     rolename: "{{ item.path | basename }}"
 
 - name: "Extract overrides from argument_specs"
-  ansible.builtin.set_fact:
-    downstream_defaults: "{{ (lookup('file',role_folder.path+'/meta/argument_specs.yml') | from_yaml).argument_specs.downstream.options | default({}) }}"
+  block:
+    - name: Extract from meta file
+      ansible.builtin.set_fact:
+        downstream_defaults: "{{ (lookup('file',role_folder.path+'/meta/argument_specs.yml') | from_yaml).argument_specs.downstream.options | default({}) }}"
+  rescue:
+    - name: Warn user
+      ansible.builtin.debug:
+        msg: "WARNING: default overrides not found in meta/argument_specs.yml in {{ role_folder }}"
+    - name: Set empty overrides
+      ansible.builtin.set_fact:
+        downstream_defaults: {}
 
 ### disabled for now as collections does not yet complies to this
 - name: "{{ fqcn_migration_strict_role_name }} Check that role name '{{ rolename }}' begin with '{{ upstream_name }}'."

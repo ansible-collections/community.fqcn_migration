@@ -12,21 +12,31 @@
     upstream_projects_dir: "{{ workdir }}/upstream"
     downstream_projects_dir: "{{ workdir }}/downstream"
     downstream_repository_host_env_varname: 'INTERNAL_GIT_REPOSITORY_URL'
-  pre_tasks:
-    - name: "Ensure all required parameters have been provided"
-      tags: always
-      ansible.builtin.assert:
-        that:
-          - downstream_name is defined
-          - upstream_name is defined
-          - project_git_url is defined
-        quiet: True
-        fail_msg: "Missing required parameter(s)."
+    downstream_placeholder_delete:
+      - build_status
+    downstream_placeholder_content:
+      - placeholder: galaxy_download
+        content: |
+          For demonstration purposes, you can run the collection directly from this folder. However, the proper setup is to download and install the collection from the Red Hat Automation Hub.
 
+          Before you install the collection, you must ensure that your system complies with the following prerequisites:
+            - You have installed the ansible-core package version 2.12 or later on a control node in your system by installing Red Hat Ansible Automation Platform 2.x.
+            - You have updated the ansible.cfg file to use the Red Hat Automation Hub as your *primary source* of Ansible collections.
+          You can install the collection on your Ansible control node by using the following command:
+              $ ansible-galaxy collection install {{ downstream_namespace }}.{{ downstream_name }}
+      - placeholder: support
+        content: |
+          The {{ downstream_namespace }}.{{ downstream_name }} collection v{{ galaxy_version | default('0.0.0-dev') }} is released as a [Technology Preview](https://access.redhat.com/support/offerings/techpreview) feature.
+
+          For more information about using this collection, see [the documentation](https://ansible.com).
+    galaxy:
+      documentation: https://ansible-collections.github.io/community.fqcn_migration/main/README.html
+      homepage: https://ansible.com
+  pre_tasks:
     - name: "Determine full path to project folder (if not provided)."
       tags: always
       ansible.builtin.set_fact:
-        project_root_folder: "{{ lookup('env', 'PWD') }}/upstream/{{ upstream_name }}.git"
+        project_root_folder: "{{ lookup('env', 'PWD') }}/upstream/{{ upstream_namespace }}.{{ upstream_name }}.git"
       when:
         - not project_root_folder is defined
         - upstream_name is defined
@@ -34,7 +44,7 @@
     - name: "Define path to downstream project"
       tags: always
       ansible.builtin.set_fact:
-        downstream_project: "{{ downstream_projects_dir }}/{{ downstream_name }}"
+        downstream_project: "{{ downstream_projects_dir }}/{{ downstream_namespace }}.{{ downstream_name }}"
 
     - name: "Git clone {{ project_git_url }} into {{ project_root_folder }}"
       ansible.builtin.include_role:
