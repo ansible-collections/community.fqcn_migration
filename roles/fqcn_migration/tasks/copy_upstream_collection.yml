@@ -9,6 +9,7 @@
 - name: Ensure rsync is installed
   ansible.builtin.dnf:
     name: rsync
+    use_backend: dnf4
   become: yes
 
 - name: "rsync {{ src }} to {{ dest }}"
