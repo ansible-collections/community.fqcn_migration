@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>README - fqcn_migration &mdash; Ansible FQCN Migration project  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/ansible-basic-sphinx-ext.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Role Index" href="roles/index.html" />
+    <link rel="prev" title="Welcome to community.fqcn_migration Collection documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Ansible FQCN Migration project
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">README - fqcn_migration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-install-the-fqcn-migration-collection">How to install the fqcn_migration collection?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-use-fqcn-migration">How to use fqcn_migration?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="roles/index.html">Role Index</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developing.html">Contributor’s Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releasing.html">Collection Versioning Strategy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ansible FQCN Migration project</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">README - fqcn_migration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="readme-fqcn-migration">
+<h1>README - fqcn_migration<a class="headerlink" href="#readme-fqcn-migration" title="Link to this heading"></a></h1>
+<p>This project, called fqcn_migration, is a set of Ansible roles designed to rename a collection and even changed its namespace. The original is refered as upstream and the targeted name as downstream. A use case for this tool would migrating a collection named play_helpers from the community namespace into the ansible one, with the name helpers.</p>
+<p>The collection fqcn_migration takes care of the changes required, ensuring that the downstream collections is identical to the upstream, apart for the required naming changes.</p>
+<section id="how-to-install-the-fqcn-migration-collection">
+<h2>How to install the fqcn_migration collection?<a class="headerlink" href="#how-to-install-the-fqcn-migration-collection" title="Link to this heading"></a></h2>
+<p>Like any other Ansible collection!</p>
+<p>$ ansible-galaxy collection install community.fqcn_migration</p>
+</section>
+<section id="how-to-use-fqcn-migration">
+<h2>How to use fqcn_migration?<a class="headerlink" href="#how-to-use-fqcn-migration" title="Link to this heading"></a></h2>
+<p>Suppose you have an upstream collection called <strong>isawesome</strong> living in the namespace <strong>mystuff</strong>. So the fqcn of your collection is <strong>mystuff.isawesome</strong> (see what I did there?). Now, you want to generate a downstream version to deliver certified content to your customers. Your company is <strong>thisisserious</strong> and the downstream of your collection is now <strong>stuff</strong>, so the fqcn is <strong>thisisserious.stuff</strong> (yes, I’m sticking with it). The upstream collection is living in the <strong>mystuff</strong> organiation on github.com and the project is called <strong>isawesome_collection</strong>.</p>
+<p>Here is an example playbook to use fqcn_migration to generate the downstream collection (thisisserious.stuff) from the upstream one (mystuff.isawesome):</p>
+<div class="highlight-YAML+Jinja notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">import_playbook</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fqcn_migration.yml</span>
+<span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">upstream_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">isawesome</span>
+<span class="w">    </span><span class="nt">upstream_namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mystuff</span>
+<span class="w">    </span><span class="nt">downstream_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">stuff</span>
+<span class="w">    </span><span class="nt">downstream_namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">thisisserious</span>
+<span class="w">    </span><span class="nt">post_processors_replacements</span><span class="p">:</span>
+<span class="w">     </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">match</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://github.com/thisisserious/stuff&quot;</span>
+<span class="w">       </span><span class="nt">replace</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://github.com/mystuff/isawesome&quot;</span>
+</pre></div>
+</div>
+<p>Note the the post_processors_replacements variables allow fqcn_migration user to specifiy strings that needs to be replace <strong>after</strong> the transformation process. As illustrated in the example above, the rewriting to content to match the downstream_namespace.downstream_collection_name can sometime transform content that needs to stay the same or replace differently.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to community.fqcn_migration Collection documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="roles/index.html" class="btn btn-neutral float-right" title="Role Index" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Red Hat, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
