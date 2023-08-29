@@ -1,0 +1,17 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: Display Ansible version
+      ansible.builtin.debug:
+        msg: "Ansible version is  {{ ansible_version.full }}"
+
+    - name: Install sudo
+      ansible.builtin.dnf:
+        name:
+          - sudo
+          - iproute
+          - python3-dnf
+          - rsync
+          - git
+        state: present

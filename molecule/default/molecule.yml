@@ -18,6 +18,7 @@ provisioner:
     ssh_connection:
       pipelining: false
   playbooks:
+    prepare: prepare.yml
     converge: converge.yml
   inventory:
     host_vars:
