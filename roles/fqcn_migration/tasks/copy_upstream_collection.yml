@@ -6,12 +6,6 @@
     quiet: true
     fail_msg: 'Missing required parameters'
 
-- name: Ensure rsync is installed
-  ansible.builtin.dnf:
-    name: rsync
-    use_backend: dnf4
-  become: yes
-
 - name: "rsync {{ src }} to {{ dest }}"
   ansible.posix.synchronize:
     src: "{{ src }}"
