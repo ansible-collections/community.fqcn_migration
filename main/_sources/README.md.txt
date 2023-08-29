@@ -1,14 +1,20 @@
 # README - fqcn_migration
 
+<!--start build_status -->
+[![Build Status](https://github.com/ansible-collections/community.fqcn_migration/workflows/CI/badge.svg?branch=main)](https://github.com/ansible-collections/community.fqcn_migration/actions/workflows/ci.yml)
+<!--end build_status -->
+
 This project, called fqcn_migration, is a set of Ansible roles designed to rename a collection and even changed its namespace. The original is refered as upstream and the targeted name as downstream. A use case for this tool would migrating a collection named play_helpers from the community namespace into the ansible one, with the name helpers.
 
 The collection fqcn_migration takes care of the changes required, ensuring that the downstream collections is identical to the upstream, apart for the required naming changes.
 
 ## How to install the fqcn_migration collection?
 
+<!--start galaxy_download -->
 Like any other Ansible collection!
 
-$ ansible-galaxy collection install community.fqcn_migration
+    $ ansible-galaxy collection install community.fqcn_migration
+<!--end galaxy_download -->
 
 ## How to use fqcn_migration?
 
@@ -16,7 +22,7 @@ Suppose you have an upstream collection called **isawesome** living in the names
 
 Here is an example playbook to use fqcn_migration to generate the downstream collection (thisisserious.stuff) from the upstream one (mystuff.isawesome):
 
-```
+```yaml
 ---
 - import_playbook: fqcn_migration.yml
   vars:
@@ -30,3 +36,10 @@ Here is an example playbook to use fqcn_migration to generate the downstream col
 ```
 
 Note the the post_processors_replacements variables allow fqcn_migration user to specifiy strings that needs to be replace **after** the transformation process. As illustrated in the example above, the rewriting to content to match the downstream_namespace.downstream_collection_name can sometime transform content that needs to stay the same or replace differently.
+
+<!--start support -->
+<!--end support -->
+
+## License
+
+[Apache License 2.0](https://github.com/ansible-middleware/amq/blob/main/LICENSE)

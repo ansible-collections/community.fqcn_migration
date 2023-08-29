@@ -48,6 +48,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">README - fqcn_migration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-install-the-fqcn-migration-collection">How to install the fqcn_migration collection?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-use-fqcn-migration">How to use fqcn_migration?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="roles/index.html">Role Index</a></li>
@@ -89,18 +90,25 @@
              
   <section id="readme-fqcn-migration">
 <h1>README - fqcn_migration<a class="headerlink" href="#readme-fqcn-migration" title="Link to this heading"></a></h1>
+<!--start build_status -->
+<p><a class="reference external" href="https://github.com/ansible-collections/community.fqcn_migration/actions/workflows/ci.yml"><img alt="Build Status" src="https://github.com/ansible-collections/community.fqcn_migration/workflows/CI/badge.svg?branch=main" /></a></p>
+<!--end build_status -->
 <p>This project, called fqcn_migration, is a set of Ansible roles designed to rename a collection and even changed its namespace. The original is refered as upstream and the targeted name as downstream. A use case for this tool would migrating a collection named play_helpers from the community namespace into the ansible one, with the name helpers.</p>
 <p>The collection fqcn_migration takes care of the changes required, ensuring that the downstream collections is identical to the upstream, apart for the required naming changes.</p>
 <section id="how-to-install-the-fqcn-migration-collection">
 <h2>How to install the fqcn_migration collection?<a class="headerlink" href="#how-to-install-the-fqcn-migration-collection" title="Link to this heading"></a></h2>
+<!--start galaxy_download -->
 <p>Like any other Ansible collection!</p>
-<p>$ ansible-galaxy collection install community.fqcn_migration</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ansible-galaxy collection install community.fqcn_migration
+</pre></div>
+</div>
+<!--end galaxy_download -->
 </section>
 <section id="how-to-use-fqcn-migration">
 <h2>How to use fqcn_migration?<a class="headerlink" href="#how-to-use-fqcn-migration" title="Link to this heading"></a></h2>
 <p>Suppose you have an upstream collection called <strong>isawesome</strong> living in the namespace <strong>mystuff</strong>. So the fqcn of your collection is <strong>mystuff.isawesome</strong> (see what I did there?). Now, you want to generate a downstream version to deliver certified content to your customers. Your company is <strong>thisisserious</strong> and the downstream of your collection is now <strong>stuff</strong>, so the fqcn is <strong>thisisserious.stuff</strong> (yes, I’m sticking with it). The upstream collection is living in the <strong>mystuff</strong> organiation on github.com and the project is called <strong>isawesome_collection</strong>.</p>
 <p>Here is an example playbook to use fqcn_migration to generate the downstream collection (thisisserious.stuff) from the upstream one (mystuff.isawesome):</p>
-<div class="highlight-YAML+Jinja notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">import_playbook</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fqcn_migration.yml</span>
 <span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">upstream_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">isawesome</span>
@@ -113,6 +121,12 @@
 </pre></div>
 </div>
 <p>Note the the post_processors_replacements variables allow fqcn_migration user to specifiy strings that needs to be replace <strong>after</strong> the transformation process. As illustrated in the example above, the rewriting to content to match the downstream_namespace.downstream_collection_name can sometime transform content that needs to stay the same or replace differently.</p>
+<!--start support -->
+<!--end support -->
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://github.com/ansible-middleware/amq/blob/main/LICENSE">Apache License 2.0</a></p>
 </section>
 </section>
 
