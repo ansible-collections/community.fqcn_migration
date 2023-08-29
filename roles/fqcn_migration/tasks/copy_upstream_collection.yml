@@ -7,9 +7,8 @@
     fail_msg: 'Missing required parameters'
 
 - name: Ensure rsync is installed
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: rsync
-    use_backend: dnf
   become: yes
 
 - name: "rsync {{ src }} to {{ dest }}"
