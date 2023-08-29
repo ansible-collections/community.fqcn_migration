@@ -13,4 +13,6 @@ jobs:
     uses: ansible-middleware/github-actions/.github/workflows/ci.yml@main
     secrets: inherit
     with:
-      fqcn: 'community.fqcn_migration.fqcn_migration'
+      fqcn: 'community/fqcn_migration'
+      molecule_tests: >-
+        [ "default" ]

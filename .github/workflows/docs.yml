@@ -8,57 +8,10 @@ on:
       - "[0-9]+.[0-9]+.[0-9]+"
   workflow_dispatch:
 
-env:
-  COLORTERM: 'yes'
-  TERM: 'xterm-256color'
-  PYTEST_ADDOPTS: '--color=yes'
-
 jobs:
   docs:
-    runs-on: ubuntu-latest
-    if: github.repository == 'ansible-collections/community.fqcn_migration'
-    permissions:
-      actions: write
-      checks: write
-      contents: write
-      deployments: write
-      packages: write
-      pages: write
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-        with:
-          path: ansible_collections/community.fqcn_migration
-          fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-
-      - name: Install doc dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r ansible_collections/community.fqcn_migration/docs/requirements.txt
-          if [ -f ansible_collections/community.fqcn_migration/requirements.txt ]; then
-            pip install -r ansible_collections/community.fqcn_migration/requirements.txt
-          fi
-          sudo apt install -y sed hub
-
-      - name: Create default collection path
-        run: |
-          mkdir -p /home/runner/.ansible/
-          ln -s /home/runner/work/community/fqcn_migration /home/runner/.ansible/collections
-
-      - name: Create changelog and documentation
-        uses: ansible-middleware/collection-docs-action@main
-        with:
-          collection_fqcn: community.fqcn_migration
-          collection_repo: ansible-collections/community.fqcn_migration
-          dependencies: false
-          commit_changelog: false
-          commit_ghpages: true
-          changelog_release: false
-          generate_docs: true
-          path: ansible_collections/community.fqcn_migration
-          token: ${{ secrets.GITHUB_TOKEN }}
+    uses: ansible-middleware/github-actions/.github/workflows/docs.yml@main
+    secrets: inherit
+    with:
+      fqcn: 'community/fqcn_migration'
+      collection_fqcn: 'community.fqcn_migration'
