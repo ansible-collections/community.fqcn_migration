@@ -1,0 +1,51 @@
+- name: "FQCN migration process community.fqcn_migration -> ansible.fqcn_migrated"
+  hosts: localhost
+  gather_facts: no
+  vars:
+    upstream_name: "fqcn_migration"
+    downstream_name: "fqcn_migrated"
+    upstream_namespace: community
+    downstream_namespace: ansible
+    project_git_url: "https://github.com/ansible-collections/community.fqcn_migration.git"
+    project_git_version: "main"
+    workdir: "{{ lookup('env', 'PWD') }}"
+    upstream_projects_dir: "{{ workdir }}/upstream"
+    downstream_projects_dir: "{{ workdir }}/downstream"
+    downstream_repository_host_env_varname: 'INTERNAL_GIT_REPOSITORY_URL'
+  pre_tasks:
+    - name: "Ensure all required parameters have been provided"
+      tags: always
+      ansible.builtin.assert:
+        that:
+          - downstream_name is defined
+          - upstream_name is defined
+          - project_git_url is defined
+        quiet: True
+        fail_msg: "Missing required parameter(s)."
+
+    - name: "Determine full path to project folder (if not provided)."
+      tags: always
+      ansible.builtin.set_fact:
+        project_root_folder: "{{ lookup('env', 'PWD') }}/upstream/{{ upstream_name }}.git"
+      when:
+        - not project_root_folder is defined
+        - upstream_name is defined
+
+    - name: "Define path to downstream project"
+      tags: always
+      ansible.builtin.set_fact:
+        downstream_project: "{{ downstream_projects_dir }}/{{ downstream_name }}"
+
+    - name: "Git clone {{ project_git_url }} into {{ project_root_folder }}"
+      ansible.builtin.include_role:
+        name: git
+        tasks_from: clone.yml
+      when:
+        - project_root_folder is defined
+        - project_git_url is defined
+
+  tasks:
+    - name: "Run FQCN migration"
+      ansible.builtin.include_role:
+        name: community.fqcn_migration.fqcn_migration
+      tags: always
