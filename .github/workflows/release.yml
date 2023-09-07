@@ -9,3 +9,4 @@ jobs:
     secrets: inherit
     with:
       collection_fqcn: 'community.fqcn_migration'
+      galaxy_token: ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
