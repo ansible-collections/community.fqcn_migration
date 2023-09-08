@@ -3,3 +3,4 @@ Role Index
 
 .. toctree::
     fqcn_migration
+    git

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>README - fqcn_migration &mdash; Ansible FQCN Migration project  documentation</title>
+  <title>community.fqcn_migration &mdash; Ansible FQCN Migration project  documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/ansible-basic-sphinx-ext.css" type="text/css" />
@@ -45,9 +45,18 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">User documentation</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">README - fqcn_migration</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">community.fqcn_migration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-install-the-fqcn-migration-collection">How to install the fqcn_migration collection?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#how-to-use-fqcn-migration">How to use fqcn_migration?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#additonal-features">Additonal features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#galaxy-links">Galaxy links</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#post-processing-reverts">Post-processing reverts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#markdown-templates">MarkDown templates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#collections-dependency-map">Collections dependency map</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
 </ul>
 </li>
@@ -78,7 +87,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">README - fqcn_migration</li>
+      <li class="breadcrumb-item active">community.fqcn_migration</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/README.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,8 +97,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="readme-fqcn-migration">
-<h1>README - fqcn_migration<a class="headerlink" href="#readme-fqcn-migration" title="Link to this heading"></a></h1>
+  <section id="community-fqcn-migration">
+<h1>community.fqcn_migration<a class="headerlink" href="#community-fqcn-migration" title="Link to this heading"></a></h1>
 <!--start build_status -->
 <p><a class="reference external" href="https://github.com/ansible-collections/community.fqcn_migration/actions/workflows/ci.yml"><img alt="Build Status" src="https://github.com/ansible-collections/community.fqcn_migration/workflows/CI/badge.svg?branch=main" /></a></p>
 <!--end build_status -->
@@ -104,25 +113,106 @@
 </div>
 <!--end galaxy_download -->
 </section>
-<section id="how-to-use-fqcn-migration">
-<h2>How to use fqcn_migration?<a class="headerlink" href="#how-to-use-fqcn-migration" title="Link to this heading"></a></h2>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
 <p>Suppose you have an upstream collection called <strong>isawesome</strong> living in the namespace <strong>mystuff</strong>. So the fqcn of your collection is <strong>mystuff.isawesome</strong> (see what I did there?). Now, you want to generate a downstream version to deliver certified content to your customers. Your company is <strong>thisisserious</strong> and the downstream of your collection is now <strong>stuff</strong>, so the fqcn is <strong>thisisserious.stuff</strong> (yes, I’m sticking with it). The upstream collection is living in the <strong>mystuff</strong> organiation on github.com and the project is called <strong>isawesome_collection</strong>.</p>
 <p>Here is an example playbook to use fqcn_migration to generate the downstream collection (thisisserious.stuff) from the upstream one (mystuff.isawesome):</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">import_playbook</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fqcn_migration.yml</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">import_playbook</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fqcn_migration.yml</span>
 <span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">upstream_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">isawesome</span>
 <span class="w">    </span><span class="nt">upstream_namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mystuff</span>
 <span class="w">    </span><span class="nt">downstream_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">stuff</span>
 <span class="w">    </span><span class="nt">downstream_namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">thisisserious</span>
-<span class="w">    </span><span class="nt">post_processors_replacements</span><span class="p">:</span>
-<span class="w">     </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">match</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://github.com/thisisserious/stuff&quot;</span>
-<span class="w">       </span><span class="nt">replace</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://github.com/mystuff/isawesome&quot;</span>
 </pre></div>
 </div>
-<p>Note the the post_processors_replacements variables allow fqcn_migration user to specifiy strings that needs to be replace <strong>after</strong> the transformation process. As illustrated in the example above, the rewriting to content to match the downstream_namespace.downstream_collection_name can sometime transform content that needs to stay the same or replace differently.</p>
+<section id="additonal-features">
+<h3>Additonal features<a class="headerlink" href="#additonal-features" title="Link to this heading"></a></h3>
+<section id="galaxy-links">
+<h4>Galaxy links<a class="headerlink" href="#galaxy-links" title="Link to this heading"></a></h4>
+<p>It is possible to transforms links in galaxy.yml using the following dict:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">galaxy</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">documentation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://access.redhat.com/documentation/en-us/red_hat_amq_broker</span>
+<span class="w">  </span><span class="nt">homepage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://access.redhat.com/products/red-hat-amq</span>
+<span class="w">  </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">  </span><span class="nt">documentation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+</pre></div>
+</div>
+</section>
+<section id="post-processing-reverts">
+<h4>Post-processing reverts<a class="headerlink" href="#post-processing-reverts" title="Link to this heading"></a></h4>
+<p>Sometimes the transformation applies unwanted replacements. The <code class="docutils literal notranslate"><span class="pre">post_processors_replacements</span></code> list can be used to revert those changes; it has the format:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">post_processors_replacements</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">match</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;-</span><span class="nv"> </span><span class="s">amq_broker&quot;</span>
+<span class="w">    </span><span class="nt">replace</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;-</span><span class="nv"> </span><span class="s">activemq&quot;</span>
+<span class="w">    </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;meta/main.yml$&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">match</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amq_broker[.]apache[.]org&quot;</span>
+<span class="w">    </span><span class="nt">replace</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;activemq.apache.org&quot;</span>
+<span class="w">    </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;README.md$&quot;</span>
+</pre></div>
+</div>
+<p>where for each dict in the list:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">match</span></code>: regular expression to lookup</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">replace</span></code>: text for replacing the matched string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">file</span></code>: regular expression matching the file paths to operate on</p></li>
+</ul>
+<p><em><strong>Note</strong></em>: the the post_processors_replacements variables allow fqcn_migration user to specifiy strings that needs to be replace <strong>after</strong> the transformation process. As illustrated in the example above, the rewriting to content to match the downstream_namespace.downstream_collection_name can sometime transform content that needs to stay the same or replace differently.</p>
+</section>
+<section id="markdown-templates">
+<h4>MarkDown templates<a class="headerlink" href="#markdown-templates" title="Link to this heading"></a></h4>
+<p>It is possible to perform replacements in markdown files that are templated with:</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!--start &lt;placeholder_string&gt; --&gt;
+arbitrary text
+&lt;!--end &lt;placeholder_string&gt; --&gt;
+</pre></div>
+</div>
+<p><em><strong>NOTE</strong></em>: placeholders can NOT be nested; in that case, the outer placeholder takes precedence.</p>
+<p>With the <code class="docutils literal notranslate"><span class="pre">downstream_placeholder_delete</span></code> list(str) it is possible to delete markdown section like for instance:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">downstream_placeholder_delete</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">build_status</span>
+</pre></div>
+</div>
+<p>against:</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!--start build_status --&gt;
+[<span class="nt">![Build Status</span>](<span class="na">https://github.com/ansible-middleware/amq/workflows/CI/badge.svg?branch=main</span>)](https://github.com/ansible-middleware/amq/actions/workflows/ci.yml)
+&lt;!--end build_status --&gt;
+</pre></div>
+</div>
+<p>will hide the github build status link and image in the generated collection.</p>
+<p>Similarly, the <code class="docutils literal notranslate"><span class="pre">downstream_placeholder_content</span></code> allow to replace the contents between the placeholders with other markdown, ie:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">downstream_placeholder_content</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">placeholder</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">galaxy_download</span>
+<span class="w">    </span><span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">      </span><span class="no">### Installing the Collection from Automation Hub</span>
+
+<span class="w">      </span><span class="no">Before using the collection, you need to setup Ansible Automation Hub as galaxy server; then install it via the CLI:</span>
+
+<span class="w">          </span><span class="no">ansible-galaxy collection install redhat.amq_broker</span>
+</pre></div>
+</div>
+<p>against:</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!--start galaxy_download --&gt;
+<span class="gu">### Installing the Collection from Ansible Galaxy</span>
+
+    ansible-galaxy collection install middleware_automation.amq
+
+&lt;!--end galaxy_download --&gt;
+</pre></div>
+</div>
+<p>Will provide different instructions depending on the galaxy server used.</p>
+</section>
+<section id="collections-dependency-map">
+<h4>Collections dependency map<a class="headerlink" href="#collections-dependency-map" title="Link to this heading"></a></h4>
+<p>Sometimes while transforming a collection, it is necessary to transform its dependencies FQCN as well. It is possible to define dependency maps like follows:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">upstream_downstream_collections_map</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> upstream_name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;middleware_automation.common&#39;</span><span class="p p-Indicator">,</span><span class="nt"> downstream_name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;redhat.runtimes_common&#39;</span><span class="w"> </span><span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+<p>which will transform occurrences of middleware_automation.common to redhat.runtimes_common in tasks files, galaxy.yml and requirements.yml</p>
 <!--start support -->
 <!--end support -->
+</section>
+</section>
 </section>
 <section id="license">
 <h2>License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>
