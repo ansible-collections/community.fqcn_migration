@@ -56,7 +56,9 @@
 
   post_tasks:
     - name: "Peform release (if requested)."
-      ansible.builtin.include_tasks: release.yml
+      ansible.builtin.include_role:
+        name: fqcn_migration
+        tasks_from: release.yml
 
     - name: "Build collection for {{ downstream_name }}"
       ansible.builtin.command: ansible-galaxy collection build .
