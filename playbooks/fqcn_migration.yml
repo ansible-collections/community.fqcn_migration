@@ -15,6 +15,7 @@
     downstream_projects_dir: "{{ workdir }}/downstream"
     downstream_repository_host_env_varname: 'INTERNAL_GIT_REPOSITORY_URL'
     skip_setup: True
+
   pre_tasks:
     - name: "Ensure all required parameters have been provided"
       tags: always
@@ -54,12 +55,10 @@
       tags: always
 
   post_tasks:
-
     - name: "Peform release (if requested)."
-      ansible.builtin.include_role:
-        name: release
+      ansible.builtin.include_tasks: release.yml
 
     - name: "Build collection for {{ downstream_name }}"
-      command: ansible-galaxy collection build .
+      ansible.builtin.command: ansible-galaxy collection build .
       args:
         chdir: "{{ downstream_project }}"
