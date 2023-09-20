@@ -10,3 +10,13 @@
   ansible.posix.synchronize:
     src: "{{ src }}"
     dest: "{{ dest }}"
+
+- name: "Remove excluded roles from downstream"
+  ansible.builtin.file:
+    path: "{{ dest }}/{{ excluded_file }}"
+    state: absent
+  loop: "{{ excluded_roles_from_downstream }}"
+  loop_control:
+    loop_var: excluded_file
+  when:
+    - excluded_roles_from_downstream is defined and excluded_roles_from_downstream | length > 0

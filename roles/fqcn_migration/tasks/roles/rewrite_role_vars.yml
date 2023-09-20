@@ -8,14 +8,15 @@
     quiet: true
     fail_msg: "Missing required parameters (path to role)"
 
-- name: "Find all YAML files (.yml)  and Jinja templates (.j2) contained in role {{ path_role_folder }}"
+- name: "Find all YAML files (.yml) and Jinja templates (.j2) contained in role {{ path_role_folder }}"
   ansible.builtin.find:
     paths: "{{ path_role_folder }}"
     patterns: '*.yml,*.j2,*.md'
     recurse: yes
   register: all_files_to_update
 
-- ansible.builtin.assert:
+- name: "Ensure that role has files."
+  ansible.builtin.assert:
     that:
       - all_files_to_update is defined
       - all_files_to_update.files is defined

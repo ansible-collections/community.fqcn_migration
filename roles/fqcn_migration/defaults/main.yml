@@ -21,3 +21,4 @@ downstream_placeholder_delete: []
 # anything inside <!--start {{ downstream_placeholder_content }} --> and <!--end {{ downstream_placeholder_content }} --> will be replaced with content
 downstream_placeholder_content: []
 override_galaxy_version: ''
+excluded_roles_from_downstream: []

@@ -10,3 +10,5 @@
   vars:
     role_folder: "{{ item }}"
   loop: "{{ upstream_roles.files }}"
+  when:
+    - (excluded_roles_from_downstream is defined and not (item.path | basename) in ( excluded_roles_from_downstream | join(',') ) ) or not excluded_roles_from_downstream is defined
