@@ -25,13 +25,16 @@
     apply:
       tags: galaxy
 
+- ansible.builtin.set_fact:
+    path_to_docs_folder: "{{ downstream_project }}/docs"
+
 - ansible.builtin.include_tasks: docs/main.yml
   tags: always
   args:
     apply:
       tags: docs
-  vars:
-    path_to_docs_folder: "{{ downstream_project }}/docs"
+  when:
+    - path_to_docs_folder is exists
 
 - ansible.builtin.include_tasks: plugins/main.yml
   tags: always
