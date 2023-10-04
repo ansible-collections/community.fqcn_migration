@@ -9,7 +9,7 @@
     downstream_name: "{{ lookup('env', 'PROJECT_NAME') | default('ansible') }}"
     upstream_collection_name: "{{ lookup('env', 'UPSTREAM_COLLECTION_NAME') | default(upstream_name) }}"
     project_git_url: "{{ lookup('env', 'GIT_REPOSITORY_URL') }}"
-    project_git_version: "{{ lookup('env', 'GIT_REPOSITORY_BRANCH') }}"
+    project_git_version: "{{ lookup('env', 'GIT_REPOSITORY_BRANCH') | default('main') }}"
     workdir: "{{ lookup('env', 'PWD') }}"
     upstream_projects_dir: "{{ workdir }}/upstream"
     downstream_projects_dir: "{{ workdir }}/downstream"
