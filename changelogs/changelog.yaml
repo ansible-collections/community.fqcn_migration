@@ -2,3 +2,16 @@ ancestor: null
 releases:
   1.0.0:
     release_date: '2023-09-07'
+  1.0.1:
+    changes:
+      minor_changes:
+      - 'Add logic to exclude some roles from downstream collection `#1 <https://github.com/ansible-collections/community.fqcn_migration/pull/1>`_
+
+        '
+      - 'Simplify conditional logic for release `#3 <https://github.com/ansible-collections/community.fqcn_migration/pull/3>`_
+
+        '
+    fragments:
+    - 1.yaml
+    - 3.yaml
+    release_date: '2023-10-11'
