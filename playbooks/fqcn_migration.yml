@@ -55,10 +55,12 @@
       tags: always
 
   post_tasks:
-    - name: "Peform release (if requested)."
+    - name: "Peform release (if requested): {{ release_version | default('no release version provided') }}."
       ansible.builtin.include_role:
         name: fqcn_migration
         tasks_from: release.yml
+      when:
+        - release_version is defined and release_version != ""
 
     - name: "Build collection for {{ downstream_name }}"
       ansible.builtin.command: ansible-galaxy collection build .

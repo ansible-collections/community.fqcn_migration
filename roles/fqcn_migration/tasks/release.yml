@@ -11,58 +11,53 @@
   ansible.builtin.set_fact:
     release_version: "{{ lookup('env','RELEASE_VERSION') }}"
 
-- name: "Peform release {{ release_version }}."
-  block:
-    - name: "Retrieve downstream repository host."
-      ansible.builtin.set_fact:
-        downstream_repository_host: "{{ lookup('env', downstream_repository_host_env_varname) }}"
+- name: "Retrieve downstream repository host."
+  ansible.builtin.set_fact:
+    downstream_repository_host: "{{ lookup('env', downstream_repository_host_env_varname) }}"
 
-    - name: "Ensure downstream repository host value has been retrieved."
-      ansible.builtin.assert:
-        that:
-          - downstream_repository_host is defined
-          - downstream_repository_host != ""
-        quiet: True
-        fail_msg: "Could not retrieve downstream repository host from env variable {{ downstream_repository_host_env_varname }}."
+- name: "Ensure downstream repository host value has been retrieved."
+  ansible.builtin.assert:
+    that:
+      - downstream_repository_host is defined
+      - downstream_repository_host != ""
+    quiet: True
+    fail_msg: "Could not retrieve downstream repository host from env variable {{ downstream_repository_host_env_varname }}."
 
-    - name: "Determine downstream project repository URL."
-      ansible.builtin.set_fact:
-        downstream_repository_url: "{{ downstream_repository_host }}/ansible-collections/{{ downstream_name }}"
-      when:
-        - not downstream_repository_url is defined
-
-    - name: "Add release repository {{ downstream_repository_url }} as downstream:"
-      ansible.builtin.include_role:
-        name: git
-        tasks_from: add_remote.yml
-      vars:
-        remote_name: downstream
-        remote_url: "{{ downstream_repository_url }}"
-
-    - name: "Append {{ downstream_namespace }} to release version {{ release_version }} to create tag"
-      ansible.builtin.set_fact:
-        tag: "{{ release_version }}-{{ downstream_namespace }}"
-
-    - name: "Commit changes."
-      ansible.builtin.include_role:
-        name: git
-        tasks_from: commit.yml
-      vars:
-        message: "'Release {{ tag }}'"
-
-    - name: "Tag version as {{ release_version }}."
-      ansible.builtin.include_role:
-        name: git
-        tasks_from: tag.yml
-
-    - name: "Publish release branch on {{ downstream_repository }} for release {{ release_version }}."
-      ansible.builtin.include_role:
-        name: git
-        tasks_from: push.yml
-      vars:
-        remote_name: downstream
-        local_branch: main
-        remote_branch: "{{ tag }}"
+- name: "Determine downstream project repository URL."
+  ansible.builtin.set_fact:
+    downstream_repository_url: "{{ downstream_repository_host }}/ansible-collections/{{ downstream_name }}"
   when:
-    - release_version is defined
-    - release_version != ""
+    - not downstream_repository_url is defined
+
+- name: "Add release repository {{ downstream_repository_url }} as downstream:"
+  ansible.builtin.include_role:
+    name: git
+    tasks_from: add_remote.yml
+  vars:
+    remote_name: downstream
+    remote_url: "{{ downstream_repository_url }}"
+
+- name: "Append {{ downstream_namespace }} to release version {{ release_version }} to create tag"
+  ansible.builtin.set_fact:
+    tag: "{{ release_version }}-{{ downstream_namespace }}"
+
+- name: "Commit changes."
+  ansible.builtin.include_role:
+    name: git
+    tasks_from: commit.yml
+  vars:
+    message: "'Release {{ tag }}'"
+
+- name: "Tag version as {{ release_version }}."
+  ansible.builtin.include_role:
+    name: git
+    tasks_from: tag.yml
+
+- name: "Publish release branch on {{ downstream_repository }} for release {{ release_version }}."
+  ansible.builtin.include_role:
+    name: git
+    tasks_from: push.yml
+  vars:
+    remote_name: downstream
+    local_branch: main
+    remote_branch: "{{ tag }}"
