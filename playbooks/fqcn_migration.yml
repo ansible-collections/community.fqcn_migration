@@ -56,7 +56,7 @@
       tags: always
 
   post_tasks:
-    - name: "Peform release (if requested): {{ release_version | default('no release version provided') }}."
+    - name: "Perform release (if requested): {{ release_version == '' | ternary('no release version provided', release_version) }}."
       ansible.builtin.include_role:
         name: fqcn_migration
         tasks_from: release.yml
