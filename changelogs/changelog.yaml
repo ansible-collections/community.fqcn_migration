@@ -15,3 +15,12 @@ releases:
     - 1.yaml
     - 3.yaml
     release_date: '2023-10-11'
+  1.0.2:
+    changes:
+      bugfixes:
+      - 'Fix multiple play executions `#4 <https://github.com/ansible-collections/community.fqcn_migration/pull/4>`_
+
+        '
+    fragments:
+    - 4.yaml
+    release_date: '2023-12-06'

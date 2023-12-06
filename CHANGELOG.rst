@@ -5,6 +5,14 @@ community.fqcn_migration Release Notes
 .. contents:: Topics
 
 
+v1.0.2
+======
+
+Bugfixes
+--------
+
+- Fix multiple play executions `#4 <https://github.com/ansible-collections/community.fqcn_migration/pull/4>`_
+
 v1.0.1
 ======
 
