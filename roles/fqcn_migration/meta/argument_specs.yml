@@ -41,6 +41,10 @@ argument_specs:
             downstream_projects_dir:
                 type: 'str'
                 default: "{{ workdir }}/downstream"
+                description: "Directory where downstream collections will be generated"
+            downstream_project:
+                type: 'str'
+                default: "{{ downstream_projects_dir }}/{{ downstream_name }}"
                 description: "Directory where the downstream collection will be generated"
             skip_setup:
                 type: 'bool'
@@ -71,3 +75,7 @@ argument_specs:
                 required: no
                 default: ''
                 description: 'Set to override value of downstream version read from galaxy.yml'
+            excluded_roles_from_downstream:
+                type: 'list'
+                default: []
+                description: "List of roles to be excluded from final collection"

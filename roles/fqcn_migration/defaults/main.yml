@@ -8,6 +8,7 @@ workdir: "{{ lookup('env', 'PWD') }}"
 upstream_organisation: 'ansible-collections'
 upstream_projects_dir: "{{ workdir }}/upstream"
 downstream_projects_dir: "{{ workdir }}/downstream"
+downstream_project: "{{ downstream_projects_dir }}/{{ downstream_name }}"
 skip_setup: True
 post_processors_replacements: []
 # maps internal dependencies that were processed by fqcn_migration
