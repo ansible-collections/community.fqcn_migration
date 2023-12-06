@@ -9,9 +9,15 @@
 
 - ansible.builtin.include_tasks: rename_vars_in_file_with_override.yml
   when: "'defaults/main.yml' in path_to_file"
+  vars:
+    upstream_value: "{{ upstream_name }}"
+    downstream_value: "{{ downstream_name }}"
 
 - ansible.builtin.include_tasks: rename_vars_in_file.yml
   when: "'defaults/main.yml' not in path_to_file"
+  vars:
+    upstream_value: "{{ upstream_name }}"
+    downstream_value: "{{ downstream_name }}"
 
 - ansible.builtin.include_tasks: rename_vars_in_file.yml
   vars:
