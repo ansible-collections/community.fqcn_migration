@@ -8,6 +8,9 @@
     fail_msg: "Missing required parameters."
 
 - ansible.builtin.include_tasks: utils/rename_vars_in_file.yml
+  vars:
+    upstream_value: "{{ upstream_name }}"
+    downstream_value: "{{ downstream_name }}"
 
 - ansible.builtin.include_tasks: utils/rename_vars_in_file.yml
   vars:
