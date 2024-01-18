@@ -9,11 +9,6 @@
     chdir: "{{ downstream_project }}"
   register: git_command_result
 
-- ansible.builtin.debug:
-    var: git_command_result
-  when:
-    - git.display_command_result
-
 - name: "Verify that command was successfully executed."
   ansible.builtin.assert:
     that:
@@ -26,4 +21,4 @@
   ansible.builtin.debug:
     var: git_command_result.stdout
   when:
-    - git_command_result.stdout | length > 0
+    - git.display_command_result and git_command_result.stdout | length > 0
