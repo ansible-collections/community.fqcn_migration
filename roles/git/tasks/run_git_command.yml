@@ -2,7 +2,8 @@
 - name: "Ensure project home is defined."
   ansible.builtin.include_tasks: git_project_home.yml
 
-- ansible.builtin.shell: |
+- name: "Execute Git command: 'git {{ git_command }}' from repo: {{ downstream_project }}"
+  ansible.builtin.shell: |
     git {{ git_command }}
   args:
     chdir: "{{ downstream_project }}"
