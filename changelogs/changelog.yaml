@@ -24,3 +24,5 @@ releases:
     fragments:
     - 4.yaml
     release_date: '2023-12-06'
+  1.0.4:
+    release_date: '2024-01-24'
