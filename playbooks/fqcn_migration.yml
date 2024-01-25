@@ -18,6 +18,12 @@
     release_version: "{{ lookup('env', 'RELEASE_NAME') | default('') }}"
 
   pre_tasks:
+    - name: "Display release version (if provided)."
+      ansible.builtin.debug:
+        var: release_version
+      when:
+        - release_version is defined and release_version | length > 0
+
     - name: "Ensure all required parameters have been provided"
       tags: always
       ansible.builtin.assert:
