@@ -23,7 +23,7 @@
 
 - name: "Determine downstream project repository URL."
   ansible.builtin.set_fact:
-    downstream_repository_url: "{{ downstream_repository_host }}/ansible-collections/{{ downstream_name }}"
+    downstream_repository_url: "{{ downstream_repository_host }}/{{ downstream_collection_organization }}/{{ downstream_name }}"
   when:
     - not downstream_repository_url is defined
 
