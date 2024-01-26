@@ -51,7 +51,7 @@
     name: git
     tasks_from: tag.yml
 
-- name: "Publish release branch on {{ downstream_repository }} for release {{ release_version }}."
+- name: "Publish release branch on {{ downstream_repository_url }} for release tagged {{ tag }}."
   ansible.builtin.include_role:
     name: git
     tasks_from: push.yml
