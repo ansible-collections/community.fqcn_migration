@@ -7,6 +7,7 @@ downstream_namespace: ansible
 workdir: "{{ lookup('env', 'PWD') }}"
 upstream_organisation: 'ansible-collections'
 upstream_projects_dir: "{{ workdir }}/upstream"
+downstream_collection_organization: 'ansible-middleware'
 downstream_projects_dir: "{{ workdir }}/downstream"
 downstream_project: "{{ downstream_projects_dir }}/{{ downstream_name }}"
 skip_setup: True
