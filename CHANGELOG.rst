@@ -5,6 +5,9 @@ community.fqcn_migration Release Notes
 .. contents:: Topics
 
 
+v1.0.6
+======
+
 v1.0.4
 ======
 
