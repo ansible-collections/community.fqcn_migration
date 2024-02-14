@@ -24,3 +24,4 @@ downstream_placeholder_delete: []
 downstream_placeholder_content: []
 override_galaxy_version: ''
 excluded_roles_from_downstream: []
+case_insensitive_match: False

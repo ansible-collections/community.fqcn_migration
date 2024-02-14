@@ -12,7 +12,7 @@
 - name: "Replace all occurences of upstream '{{ upstream_value }}' to downstream '{{ downstream_value }}' in '{{ path_to_file }}'"
   ansible.builtin.replace:
     path: "{{ path_to_file }}"
-    regexp: "{{ upstream_value }}"
+    regexp: "{{ '(?i)' + upstream_value if case_insensitive_match else upstream_value }}"
     replace: "{{ downstream_value }}"
     #validate: "python -c 'import yaml, sys; print(yaml.safe_load(sys.stdin))'"
   when:
