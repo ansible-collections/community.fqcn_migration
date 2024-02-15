@@ -79,3 +79,7 @@ argument_specs:
                 type: 'list'
                 default: []
                 description: "List of roles to be excluded from final collection"
+            case_insensitive_match:
+                type: 'bool'
+                default: False
+                description: "Set the value to make upstream_name case insensitive for vars replacement in the collection" 
