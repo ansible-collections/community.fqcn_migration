@@ -1,9 +1,16 @@
-======================================
-community.fqcn_migration Release Notes
-======================================
+=======================================
+community.fqcn\_migration Release Notes
+=======================================
 
 .. contents:: Topics
 
+v1.0.7
+======
+
+Minor Changes
+-------------
+
+- Allow to match upstream names with case insensitive flag `#7 <https://github.com/ansible-collections/community.fqcn_migration/pull/7>`_
 
 v1.0.6
 ======
@@ -30,3 +37,4 @@ Minor Changes
 
 v1.0.0
 ======
+

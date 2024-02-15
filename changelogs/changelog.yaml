@@ -28,3 +28,12 @@ releases:
     release_date: '2024-01-24'
   1.0.6:
     release_date: '2024-01-26'
+  1.0.7:
+    changes:
+      minor_changes:
+      - 'Allow to match upstream names with case insensitive flag `#7 <https://github.com/ansible-collections/community.fqcn_migration/pull/7>`_
+
+        '
+    fragments:
+    - 7.yaml
+    release_date: '2024-02-15'
