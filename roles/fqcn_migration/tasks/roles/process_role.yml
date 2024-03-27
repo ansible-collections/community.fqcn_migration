@@ -56,7 +56,7 @@
   ansible.builtin.set_fact:
     downstream_role_path: "{{ downstream_project }}/roles/{{ downstream_rolename }}"
 
-- name: "Rename role '{{ rolename }}' from {{ role_folder.path }} to {{ downstream_project }}/roles//{{ downstream_rolename }}"
+- name: "Rename role '{{ rolename }}' from {{ role_folder.path }} to {{ downstream_project }}/roles/{{ downstream_rolename }}"
   ansible.builtin.shell: |
     git mv roles/{{ rolename }} roles/{{ downstream_rolename }}
   args:
@@ -68,3 +68,20 @@
   ansible.builtin.include_tasks: roles/rewrite_role_vars.yml
   vars:
     path_role_folder: "{{ downstream_role_path }}"
+
+- name: "Lookup doc file candidates for argument specs in {{ downstream_role_path }}"
+  ansible.builtin.find:
+    paths: "{{ downstream_role_path }}"
+    recurse: yes
+    file_type: file
+    patterns: 'README[.][Mm][Dd]'
+    contains: "^[|] ?`"
+  register: markdown
+
+- name: "Include argument specs doc replacement tasks"
+  ansible.builtin.include_tasks: ../docs/argument_specs.yml
+  vars:
+    path_to_file: "{{ markdownfile.path }}"
+  loop: "{{ markdown.files }}"
+  loop_control:
+    loop_var: markdownfile
