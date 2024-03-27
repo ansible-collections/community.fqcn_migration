@@ -3,24 +3,24 @@ argument_specs:
         options:
             upstream_name:
                 type: 'str'
-                required: yes
+                required: true
                 description: "The prefix for roles in the upstream collection to transform"
             downstream_name:
                 type: 'str'
-                required: yes
+                required: true
                 description: "The name of the downstream collection to generate"
             upstream_collection_name:
                 type: 'str'
-                required: no
+                required: false
                 default: "{{ upstream_name }}"
                 description: "Optional name of upstream collection"
             project_git_url:
                 type: 'str'
-                required: no
+                required: false
                 description: "If provided, the git url used to fetch the upstream project repository"
             project_git_version:
                 type: 'str'
-                required: no
+                required: false
                 description: "If provided along project_git_url, the branch to fetch the upstream project from"
             upstream_namespace:
                 type: 'str'
@@ -72,7 +72,7 @@ argument_specs:
                 description: "List of placeholder comments used to add/replace downstream documentation snippets. List of dict(placeholder:str,content:str)"
             override_galaxy_version:
                 type: 'str'
-                required: no
+                required: false
                 default: ''
                 description: 'Set to override value of downstream version read from galaxy.yml'
             excluded_roles_from_downstream:
@@ -82,4 +82,18 @@ argument_specs:
             case_insensitive_match:
                 type: 'bool'
                 default: False
-                description: "Set the value to make upstream_name case insensitive for vars replacement in the collection" 
+                description: "Set the value to make upstream_name case insensitive for vars replacement in the collection"
+    downstream:
+        options:
+            case_insensitive_match:
+                type: 'bool'
+                default: True
+                description: "Set the value to make upstream_name case insensitive for vars replacement in the collection"
+            upstream_namespace:
+                type: 'str'
+                default: "ansible"
+                description: "Name of the upstream namespace to transform, but different"
+            downstream_namespace:
+                type: 'str'
+                default: "acme"
+                description: "Name of the downstream namespace to generate the collection into, also different"
