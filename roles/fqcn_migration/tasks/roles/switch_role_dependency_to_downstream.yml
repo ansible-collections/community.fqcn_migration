@@ -1,15 +1,15 @@
 ---
-- assert:
+- ansible.builtin.assert:
     that:
       - path_to_meta_main_yml is defined
     quiet: true
     fail_msg: 'Missing required parameter.'
 
-- stat:
+- ansible.builtin.stat:
     path: "{{ path_to_meta_main_yml }}"
   register: is_meta_main_yml
 
-- assert:
+- ansible.builtin.assert:
     that:
       - is_meta_main_yml is defined
       - is_meta_main_yml.stat is defined

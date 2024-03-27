@@ -1,0 +1,29 @@
+---
+- name: "Override upstream with downstream defaults in '{{ path_to_file }}'"
+  ansible.builtin.replace:
+    dest: "{{ path_to_file }}"
+    regexp: "^[|] ?`{{ downstream_default.key }}` ?[|].*$"
+    replace: "|`{{ downstream_default.key }}`| {{ downstream_default.value.description }} | `{{ downstream_default.value.default | string }}` |"
+  when:
+    - downstream_defaults | length > 0
+    - path_to_file is exists
+    - downstream_default.value is defined and downstream_default.value.default is defined
+  loop: "{{ downstream_defaults | default({}) | dict2items | default([]) }}"
+  loop_control:
+    loop_var: downstream_default
+  register: replacements
+- name: "Add parameters that exist only downstream"
+  ansible.builtin.replace:
+    dest: "{{ path_to_file }}"
+    regexp: '(?m)(Default ?[|]\n*?[|]:?-*[|]:?-*[|]:?-*[|]\n)'
+    replace: '\1|`{{ downstream_default.key }}`| {{ downstream_default.value.description }} | `{{ downstream_default.value.default | string }}` |\n'
+    after: '<!--start argument_specs-->'
+    before: "`{{ (replacements.results | selectattr('changed', 'equalto', True) | first).downstream_default.key }}`"
+  loop: "{{ downstream_defaults | default({}) | dict2items | default([]) }}"
+  loop_control:
+    loop_var: downstream_default
+  when:
+    - not (replacements.results | selectattr('downstream_default.key', 'equalto', downstream_default.key) | first).changed
+    - downstream_defaults | length > 0
+    - path_to_file is exists
+    - downstream_default.value is defined and downstream_default.value.default is defined

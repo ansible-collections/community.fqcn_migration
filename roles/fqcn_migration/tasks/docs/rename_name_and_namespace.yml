@@ -7,12 +7,14 @@
     quiet: True
     fail_msg: "Missing required parameters."
 
-- ansible.builtin.include_tasks: utils/rename_vars_in_file.yml
+- name: "Include rename vars in file (name)"
+  ansible.builtin.include_tasks: utils/rename_vars_in_file.yml
   vars:
     upstream_value: "{{ upstream_name }}"
     downstream_value: "{{ downstream_name }}"
 
-- ansible.builtin.include_tasks: utils/rename_vars_in_file.yml
+- name: "Include rename vars in file (namespace)"
+  ansible.builtin.include_tasks: utils/rename_vars_in_file.yml
   vars:
     upstream_value: "{{ upstream_namespace }}"
     downstream_value: "{{ downstream_namespace }}"

@@ -2,8 +2,6 @@
 - name: "FQCN migration process"
   hosts: localhost
   gather_facts: no
-  collections:
-    - community.fqcn_migration
   vars:
     upstream_name: "{{ lookup('env', 'PROJECT_UPSTREAM_NAME') | default('community') }}"
     downstream_name: "{{ lookup('env', 'PROJECT_NAME') | default('ansible') }}"
@@ -49,7 +47,7 @@
 
     - name: "Git clone {{ project_git_url }} into {{ project_root_folder }}"
       ansible.builtin.include_role:
-        name: git
+        name: community.fqcn_migration.git
         tasks_from: clone.yml
       when:
         - project_root_folder is defined
@@ -58,13 +56,13 @@
   tasks:
     - name: "Run FQCN migration"
       ansible.builtin.include_role:
-        name: fqcn_migration
+        name: community.fqcn_migration.fqcn_migration
       tags: always
 
   post_tasks:
     - name: "Perform release (if requested): {{ release_version == '' | ternary('no release version provided', release_version) }}."
       ansible.builtin.include_role:
-        name: fqcn_migration
+        name: community.fqcn_migration.fqcn_migration
         tasks_from: release.yml
       when:
         - release_version is defined and release_version != ""

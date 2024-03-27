@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.assert:
+- name: "Check parameters"
+  ansible.builtin.assert:
     that:
       - path_to_docs_folder is defined
       - upstream_namespace is defined
@@ -7,23 +8,27 @@
     quiet: True
     fail_msg: "Missing required parameter."
 
-- ansible.builtin.include_tasks: utils/check_dir_exists.yml
+- name: "Check directories"
+  ansible.builtin.include_tasks: utils/check_dir_exists.yml
   vars:
     path_to_dir: "{{ path_to_docs_folder }}"
 
-- ansible.builtin.find:
+- name: "Lookup doc file candidates"
+  ansible.builtin.find:
     paths: "{{ path_to_docs_folder }}"
     file_type: file
     recurse: yes
     patterns: '*.yml,*.rst,*.md'
   register: docs
 
-- ansible.builtin.include_tasks: docs/rename_name_and_namespace.yml
+- name: "Include rename tasks"
+  ansible.builtin.include_tasks: docs/rename_name_and_namespace.yml
   vars:
     path_to_file: "{{ item.path }}"
   loop: "{{ docs.files }}"
 
-- ansible.builtin.find:
+- name: "Lookup doc file candidates for placeholders"
+  ansible.builtin.find:
     paths: "{{ path_to_docs_folder | dirname }}"
     recurse: yes
     file_type: file
@@ -31,7 +36,8 @@
     contains: "^<!--start.*"
   register: markdown
 
-- ansible.builtin.include_tasks: docs/placeholders.yml
+- name: "Include placeholder replacement tasks"
+  ansible.builtin.include_tasks: docs/placeholders.yml
   vars:
     path_to_file: "{{ item.path }}"
   loop: "{{ markdown.files }}"

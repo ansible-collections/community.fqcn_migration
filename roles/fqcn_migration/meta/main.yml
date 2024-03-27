@@ -1,10 +1,7 @@
 ---
-collections:
-  - community.fqcn_migration
-
 galaxy_info:
   role_name: fqcn_migration
-  namespace: community.fqcn_migration
+  namespace: community
   author: Romain Pelisse
   description: Role designed to transform a collection from upstream to downstream
   company: Red Hat, Inc.
@@ -16,7 +13,8 @@ galaxy_info:
   platforms:
    - name: EL
      versions:
-     - 8
+      - "8"
+      - "9"
 
   galaxy_tags:
     - redhat
