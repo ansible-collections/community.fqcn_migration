@@ -1,12 +1,13 @@
 ---
-- ansible.builtin.assert:
+- name: "Check parameters"
+  ansible.builtin.assert:
     that:
       - src is defined
       - dest is defined
     quiet: true
     fail_msg: 'Missing required parameters'
 
-- name: "rsync {{ src }} to {{ dest }}"
+- name: "Run rsync {{ src }} to {{ dest }}"
   ansible.posix.synchronize:
     src: "{{ src }}"
     dest: "{{ dest }}"

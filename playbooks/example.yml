@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.import_playbook: ./fqcn_migration.yml
+- name: "Example using main playbook"
+  ansible.builtin.import_playbook: ./fqcn_migration.yml
   vars:
     upstream_name: kubevirt
     downstream_name: kvirt

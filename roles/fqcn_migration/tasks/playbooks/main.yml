@@ -1,12 +1,14 @@
 ---
-- assert:
+- name: "Check parameters"
+  ansible.builtin.assert:
     that:
       - project_root_folder is defined
       - downstream_project is defined
     quiet: True
     fail_msg: "Missing required parameters."
 
-- set_fact:
+- name: "Set parameters"
+  ansible.builtin.set_fact:
     path_to_playbooks_dir: "{{ project_root_folder }}/playbooks"
     path_to_playbooks_dir_dest: "{{ downstream_project }}/playbooks"
 
@@ -15,7 +17,10 @@
     path: "{{ path_to_playbooks_dir }}"
   register: is_playbook_dir
 
-- block:
+- name: "Handle playbooks"
+  when:
+    - is_playbook_dir.stat.exists
+  block:
     - name: "List all playbooks within {{ path_to_playbooks_dir_dest }}"
       ansible.builtin.find:
         paths: "{{ path_to_playbooks_dir_dest }}"
@@ -29,8 +34,6 @@
       loop: "{{ downstream_playbooks.files }}"
       loop_control:
         loop_var: playbook_file
-  when:
-    - is_playbook_dir.stat.exists
 
 - name: "List all roles within {{ downstream_project }}/roles"
   ansible.builtin.find:
@@ -39,7 +42,8 @@
     file_type: directory
   register: downstream_roles
 
-- assert:
+- name: "Check parameters"
+  ansible.builtin.assert:
     that:
       - downstream_roles is defined
     quiet: True
