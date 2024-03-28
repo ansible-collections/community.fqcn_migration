@@ -4,6 +4,15 @@ community.fqcn\_migration Release Notes
 
 .. contents:: Topics
 
+v1.0.8
+======
+
+Minor Changes
+-------------
+
+- Add parameter plugin_replacement_strict `#13 <https://github.com/ansible-collections/community.fqcn_migration/pull/13>`_
+- Role parameters in README.md migrated using argument specs `#11 <https://github.com/ansible-collections/community.fqcn_migration/pull/11>`_
+
 v1.0.7
 ======
 

@@ -37,3 +37,16 @@ releases:
     fragments:
     - 7.yaml
     release_date: '2024-02-15'
+  1.0.8:
+    changes:
+      minor_changes:
+      - 'Add parameter plugin_replacement_strict `#13 <https://github.com/ansible-collections/community.fqcn_migration/pull/13>`_
+
+        '
+      - 'Role parameters in README.md migrated using argument specs `#11 <https://github.com/ansible-collections/community.fqcn_migration/pull/11>`_
+
+        '
+    fragments:
+    - 11.yaml
+    - 13.yaml
+    release_date: '2024-03-28'
