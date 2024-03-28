@@ -37,6 +37,7 @@
   loop:
     - homepage
     - documentation
+    - description
   when: galaxy is defined and galaxy[item] is defined
 
 - name: "Include tasks - replace deps"

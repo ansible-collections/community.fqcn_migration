@@ -83,6 +83,10 @@ argument_specs:
                 type: 'bool'
                 default: False
                 description: "Set the value to make upstream_name case insensitive for vars replacement in the collection"
+            plugin_replacement_strict:
+                default: false
+                description: "set to true to only replace literal 'namespace.name'"
+                type: 'bool'
     downstream:
         options:
             case_insensitive_match:
