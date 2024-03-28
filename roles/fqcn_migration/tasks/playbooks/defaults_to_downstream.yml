@@ -1,18 +1,22 @@
 ---
-- ansible.builtin.assert:
+- name: "Check parameters"
+  ansible.builtin.assert:
     that:
       - path_to_playbook_file is defined
       - downstream_project is defined
     quiet: True
     fail_msg: "Required mandatory parameters"
 
-- ansible.builtin.set_fact:
+- name: "Set parameter"
+  ansible.builtin.set_fact:
     downstream_collection_name: "{{ downstream_project | basename }}"
 
-- block:
+- name: "Include playbook if exists"
+  block:
     #TODO check that file exists on controller would be nicer
     - name: "Attempt to run default to downstream playbook for {{ downstream_collection_name }}."
       ansible.builtin.include_tasks: "playbooks/defaults_to_downstream/{{ downstream_collection_name }}.yml"
   rescue:
-    - ansible.builtin.debug:
+    - name: "Inform user"
+      ansible.builtin.debug:
         msg: "No such playbook, carrying on."

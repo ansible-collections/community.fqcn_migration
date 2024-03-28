@@ -1,9 +1,11 @@
 ---
-- ansible.builtin.include_tasks: utils/check_file_exists.yml
+- name: "Check file exists"
+  ansible.builtin.include_tasks: utils/check_file_exists.yml
   vars:
     path_to_file: "{{ path_to_playbook_file }}"
 
-- ansible.builtin.include_tasks: utils/replace_name_and_namespace.yml
+- name: "Replace name and namespace"
+  ansible.builtin.include_tasks: utils/replace_name_and_namespace.yml
   vars:
     path_to_file: "{{ path_to_playbook_file }}"
 

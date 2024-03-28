@@ -3,8 +3,7 @@
   ansible.builtin.include_tasks: git_project_home.yml
 
 - name: "Execute Git command: 'git {{ git_command }}' from repo: {{ downstream_project }}"
-  ansible.builtin.shell: |
-    git {{ git_command }}
+  ansible.builtin.command: git {{ git_command }}     # noqa command-instead-of-module
   args:
     chdir: "{{ downstream_project }}"
   register: git_command_result

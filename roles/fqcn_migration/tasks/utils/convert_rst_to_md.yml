@@ -1,20 +1,24 @@
 ---
 - name: Check file exists
   block:
-    - ansible.builtin.include_tasks: utils/check_file_exists.yml
+    - name: "Include check file"
+      ansible.builtin.include_tasks: utils/check_file_exists.yml
   rescue:
-    - ansible.builtin.debug:
+    - name: "Inform user"
+      ansible.builtin.debug:
         msg: "File `{{ path_to_file }}` not found."
 
 - name: "Convert {{ path_to_file }} to markdown"
   block:
     - name: Ensure pandoc is present
-      ansible.builtin.dnf:
+      ansible.builtin.package:
         name: pandoc
-      become: yes
+      become: true
     - name: Run pandoc to convert file format
+      changed_when: true
       ansible.builtin.command: >
         pandoc --from=rst --to=markdown_strict -o {{ path_to_file | regex_replace('[.]rst$', '.md')}} {{ path_to_file }}
   rescue:
-    - ansible.builtin.debug:
+    - name: "Inform user"
+      ansible.builtin.debug:
         msg: "Error running conversion rst->md with pandoc."

@@ -1,7 +1,7 @@
 ---
 - name: "FQCN migration process"
   hosts: localhost
-  gather_facts: no
+  gather_facts: false
   vars:
     upstream_name: "{{ lookup('env', 'PROJECT_UPSTREAM_NAME') | default('community') }}"
     downstream_name: "{{ lookup('env', 'PROJECT_NAME') | default('ansible') }}"

@@ -19,8 +19,7 @@
   when: path_to_file != downstream_pluginpath
 
 - name: "Rename plugin '{{ path_to_file }}' to '{{ downstream_pluginpath }}'"
-  ansible.builtin.shell: |
-    git mv -f {{ path_to_file }} {{ downstream_pluginpath }}
+  ansible.builtin.command: git mv -f {{ path_to_file }} {{ downstream_pluginpath }}  # noqa command-instead-of-module
   args:
     chdir: "{{ downstream_project }}"
   when: path_to_file != downstream_pluginpath

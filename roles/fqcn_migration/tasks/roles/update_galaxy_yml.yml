@@ -39,7 +39,8 @@
     - documentation
   when: galaxy is defined and galaxy[item] is defined
 
-- ansible.builtin.include_tasks: roles/replace_deps_to_upstream_name_to_downstream.yml
+- name: "Include tasks - replace deps"
+  ansible.builtin.include_tasks: roles/replace_deps_to_upstream_name_to_downstream.yml
   vars:
     path_to_file: "{{ file_to_update }}"
   loop:
