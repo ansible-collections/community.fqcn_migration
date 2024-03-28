@@ -18,7 +18,7 @@
     regexp: '(?m)(Default ?[|]\n*?[|]:?-*[|]:?-*[|]:?-*[|]\n)'
     replace: '\1|`{{ downstream_default.key }}`| {{ downstream_default.value.description }} | `{{ downstream_default.value.default | string }}` |\n'
     after: '<!--start argument_specs-->'
-    before: "`{{ (replacements.results | selectattr('changed', 'equalto', True) | first).downstream_default.key }}`"
+    before: "`{{ (replacements.results | selectattr('changed', 'equalto', True) | first).downstream_default.key | default('<!--end argument_specs-->') }}`"
   loop: "{{ downstream_defaults | default({}) | dict2items | default([]) }}"
   loop_control:
     loop_var: downstream_default
