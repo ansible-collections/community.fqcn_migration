@@ -7,6 +7,11 @@ community.fqcn\_migration Release Notes
 v1.0.8-devel
 ============
 
+Minor Changes
+-------------
+
+- Role parameters in README.md migrated using argument specs `#11 <https://github.com/ansible-collections/community.fqcn_migration/pull/11>`_
+
 v1.0.7
 ======
 
