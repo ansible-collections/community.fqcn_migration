@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.assert:
+- name: "Check parameters"
+  ansible.builtin.assert:
     that:
       - upstream_namespace is defined and upstream_namespace != ""
       - upstream_name is defined and upstream_name != ""

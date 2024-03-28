@@ -17,7 +17,7 @@
   ansible.builtin.find:
     paths: "{{ path_to_docs_folder }}"
     file_type: file
-    recurse: yes
+    recurse: true
     patterns: '*.yml,*.rst,*.md'
   register: docs
 
@@ -30,7 +30,7 @@
 - name: "Lookup doc file candidates for placeholders"
   ansible.builtin.find:
     paths: "{{ path_to_docs_folder | dirname }}"
-    recurse: yes
+    recurse: true
     file_type: file
     patterns: '*.md'
     contains: "^<!--start.*"

@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.assert:
+- name: "Check parameters"
+  ansible.builtin.assert:
     that:
       - path_to_file is defined
       - upstream_namespace is defined
@@ -7,19 +8,22 @@
     quiet: True
     fail_msg: "Missing required parameters."
 
-- ansible.builtin.include_tasks: rename_vars_in_file_with_override.yml
+- name: "Include rename vars in files with overrides"
+  ansible.builtin.include_tasks: rename_vars_in_file_with_override.yml
   when: "'defaults/main.yml' in path_to_file"
   vars:
     upstream_value: "{{ upstream_name }}"
     downstream_value: "{{ downstream_name }}"
 
-- ansible.builtin.include_tasks: rename_vars_in_file.yml
+- name: "Include rename vars in files"
+  ansible.builtin.include_tasks: rename_vars_in_file.yml
   when: "'defaults/main.yml' not in path_to_file"
   vars:
     upstream_value: "{{ upstream_name }}"
     downstream_value: "{{ downstream_name }}"
 
-- ansible.builtin.include_tasks: rename_vars_in_file.yml
+- name: "Include rename vars in files"
+  ansible.builtin.include_tasks: rename_vars_in_file.yml
   vars:
     upstream_value: "{{ upstream_namespace }}"
     downstream_value: "{{ downstream_namespace }}"

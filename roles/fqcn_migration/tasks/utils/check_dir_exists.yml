@@ -1,15 +1,18 @@
 ---
-- ansible.builtin.assert:
+- name: "Check parameters"
+  ansible.builtin.assert:
     that:
       - path_to_dir is defined
     quiet: True
     fail_msg: "Missing required parameters."
 
-- ansible.builtin.stat:
+- name: "Stat file"
+  ansible.builtin.stat:
     path: "{{ path_to_dir }}"
   register: is_path_to_dir
 
-- ansible.builtin.assert:
+- name: "Check parameters"
+  ansible.builtin.assert:
     that:
       - is_path_to_dir is defined
       - is_path_to_dir.stat is defined

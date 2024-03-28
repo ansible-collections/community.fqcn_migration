@@ -28,7 +28,8 @@
       ansible.builtin.set_fact:
         depmap: "{{ (depmap | default([])) + (used_deps['content'] | b64decode | from_yaml)['collections'] | map(attribute='name') | default([]) }}"
   rescue:
-    - ansible.builtin.debug:
+    - name: "Inform user"
+      ansible.builtin.debug:
         msg: "Couldn't load dependency map from requirements.yml: file does not exist"
 
 - name: Check if .github folders exist in {{ downstream_project }}."
@@ -44,7 +45,8 @@
     - "{{ downstream_project }}/.github"
   when: github_dir.stat.exists
 
-- ansible.builtin.include_tasks: roles/replace_deps_to_upstream_name_to_downstream.yml
+- name: "Include tasks - replace deps"
+  ansible.builtin.include_tasks: roles/replace_deps_to_upstream_name_to_downstream.yml
   vars:
     path_to_file: "{{ filepath }}"
   loop:
@@ -55,7 +57,8 @@
   loop_control:
     loop_var: filepath
 
-- ansible.builtin.include_tasks: utils/replace_name_and_namespace.yml
+- name: "Include tasks - replace name and ns"
+  ansible.builtin.include_tasks: utils/replace_name_and_namespace.yml
   vars:
     path_to_file: "{{ filepath }}"
   loop:
@@ -66,6 +69,7 @@
   loop_control:
     loop_var: filepath
 
-- ansible.builtin.include_tasks: utils/convert_rst_to_md.yml
+- name: "Include tasks - convert_rst_to_md"
+  ansible.builtin.include_tasks: utils/convert_rst_to_md.yml
   vars:
     path_to_file: "{{ downstream_project }}/docs/CHANGELOG.rst"

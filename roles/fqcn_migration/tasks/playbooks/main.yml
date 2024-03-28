@@ -24,11 +24,12 @@
     - name: "List all playbooks within {{ path_to_playbooks_dir_dest }}"
       ansible.builtin.find:
         paths: "{{ path_to_playbooks_dir_dest }}"
-        recurse: no
+        recurse: false
         patterns: '*.yml'
       register: downstream_playbooks
 
-    - ansible.builtin.include_tasks: playbooks/rename.yml
+    - name: "Include playbook rename tasks"
+      ansible.builtin.include_tasks: playbooks/rename.yml
       vars:
         path_to_playbook_file: "{{ playbook_file.path }}"
       loop: "{{ downstream_playbooks.files }}"
@@ -38,7 +39,7 @@
 - name: "List all roles within {{ downstream_project }}/roles"
   ansible.builtin.find:
     paths: "{{ downstream_project }}/roles"
-    recurse: no
+    recurse: false
     file_type: directory
   register: downstream_roles
 
@@ -49,7 +50,8 @@
     quiet: True
     fail_msg: "Internal error, can't list roles within: {{ downstream_project }}/roles"
 
-- ansible.builtin.include_tasks: roles/switch_role_dependency_to_downstream.yml
+- name: "Include dependency rename tasks"
+  ansible.builtin.include_tasks: roles/switch_role_dependency_to_downstream.yml
   vars:
     path_to_meta_main_yml: "{{ downstream_role_dir.path }}/meta/main.yml"
   loop: "{{ downstream_roles.files }}"

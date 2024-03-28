@@ -12,7 +12,7 @@
   ansible.builtin.find:
     paths: "{{ path_role_folder }}"
     patterns: '*.yml,*.j2,*.md'
-    recurse: yes
+    recurse: true
   register: all_files_to_update
 
 - name: "Ensure that role has files."

@@ -1,10 +1,12 @@
 ---
-- ansible.builtin.set_fact:
+- name: "Set upstream name"
+  ansible.builtin.set_fact:
     upstream_value: "{{ upstream_name }}"
   when:
     - not upstream_value is defined
 
-- ansible.builtin.set_fact:
+- name: "Set downstream name"
+  ansible.builtin.set_fact:
     downstream_value: "{{ downstream_name }}"
   when:
     - not downstream_value is defined

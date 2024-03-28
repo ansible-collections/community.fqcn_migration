@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.assert:
+- name: "Check parameters"
+  ansible.builtin.assert:
     that:
       - path_to_file is defined
       - upstream_namespace is defined

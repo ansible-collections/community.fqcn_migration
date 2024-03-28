@@ -2,7 +2,7 @@
 - name: "Lookup molecule files"
   ansible.builtin.find:
     paths: "{{ molecule_dir }}"
-    recurse: yes
+    recurse: true
     patterns: '*.yml,*.j2'
   register: molecule_yaml
 

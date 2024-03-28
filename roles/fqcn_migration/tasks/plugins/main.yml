@@ -4,7 +4,7 @@
     paths: "{{ downstream_project }}/plugins/"
     file_type: file
     patterns: '*.py'
-    recurse: yes
+    recurse: true
   register: plugin_results
 
 - name: Update plugins (ensures EXAMPLES will have correct FQCNs)
@@ -16,5 +16,5 @@
 - name: Process plugin file
   ansible.builtin.include_tasks: process_plugin.yml
   vars:
-    path_to_file: "{{ item.path }}"  
+    path_to_file: "{{ item.path }}"
   loop: "{{ plugin_results.files }}"

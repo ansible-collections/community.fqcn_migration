@@ -57,8 +57,7 @@
     downstream_role_path: "{{ downstream_project }}/roles/{{ downstream_rolename }}"
 
 - name: "Rename role '{{ rolename }}' from {{ role_folder.path }} to {{ downstream_project }}/roles/{{ downstream_rolename }}"
-  ansible.builtin.shell: |
-    git mv roles/{{ rolename }} roles/{{ downstream_rolename }}
+  ansible.builtin.command: git mv roles/{{ rolename }} roles/{{ downstream_rolename }}   # noqa command-instead-of-module
   args:
     chdir: "{{ downstream_project }}"
   when:
@@ -72,7 +71,7 @@
 - name: "Lookup doc file candidates for argument specs in {{ downstream_role_path }}"
   ansible.builtin.find:
     paths: "{{ downstream_role_path }}"
-    recurse: yes
+    recurse: true
     file_type: file
     patterns: 'README[.][Mm][Dd]'
     contains: "^[|] ?`"
