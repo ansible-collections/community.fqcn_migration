@@ -4,6 +4,14 @@ community.fqcn\_migration Release Notes
 
 .. contents:: Topics
 
+v1.0.9
+======
+
+Release Summary
+---------------
+
+Internal release, documentation or test changes only.
+
 v1.0.8
 ======
 

@@ -50,3 +50,9 @@ releases:
     - 11.yaml
     - 13.yaml
     release_date: '2024-03-28'
+  1.0.9:
+    changes:
+      release_summary: Internal release, documentation or test changes only.
+    fragments:
+    - v1.0.9-devel_summary.yaml
+    release_date: '2024-04-05'
