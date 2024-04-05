@@ -45,7 +45,7 @@
       ansible.builtin.set_fact:
         downstream_project: "{{ downstream_projects_dir }}/{{ downstream_name }}"
 
-    - name: "Git clone {{ project_git_url }} [{{ project_git_version }] into {{ project_root_folder }}"
+    - name: "Git clone {{ project_git_url }} [{{ project_git_version }}] into {{ project_root_folder }}"
       ansible.builtin.include_role:
         name: community.fqcn_migration.git
         tasks_from: clone.yml
