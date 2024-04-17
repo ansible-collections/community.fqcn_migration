@@ -4,6 +4,14 @@ community.fqcn\_migration Release Notes
 
 .. contents:: Topics
 
+v1.0.10
+=======
+
+Bugfixes
+--------
+
+- Update replacement of bool argument specs `#15 <https://github.com/ansible-collections/community.fqcn_migration/pull/15>`_
+
 v1.0.9
 ======
 

@@ -15,6 +15,15 @@ releases:
     - 1.yaml
     - 3.yaml
     release_date: '2023-10-11'
+  1.0.10:
+    changes:
+      bugfixes:
+      - 'Update replacement of bool argument specs `#15 <https://github.com/ansible-collections/community.fqcn_migration/pull/15>`_
+
+        '
+    fragments:
+    - 15.yaml
+    release_date: '2024-04-17'
   1.0.2:
     changes:
       bugfixes:
