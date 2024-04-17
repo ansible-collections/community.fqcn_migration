@@ -24,7 +24,7 @@
   ansible.builtin.lineinfile:
     path: "{{ path_to_file }}"
     regexp: "^{{ downstream_default.key }}:.*$"
-    line: "{{ downstream_default.key }}: {{ downstream_default.value.default }}"
+    line: "{{ downstream_default.key }}: {{ downstream_default.value.default | lower if downstream_default.value.type == 'bool' else downstream_default.value.default }}"
   when:
     - downstream_defaults | length > 0
     - path_to_file is exists
