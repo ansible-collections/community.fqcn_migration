@@ -65,7 +65,7 @@
         name: community.fqcn_migration.fqcn_migration
         tasks_from: release.yml
       when:
-        - release_version is defined and release_version != ""
+        - release_version is defined and release_version != "" and release_version != "TEST"
 
     - name: "Build collection for {{ downstream_name }}"
       ansible.builtin.command: ansible-galaxy collection build .

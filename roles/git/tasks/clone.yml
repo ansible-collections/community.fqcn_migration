@@ -7,7 +7,7 @@
     quiet: True
     fail_msg: "Missing required parameters"
 
-- name: "Git clone {{ project_git_url }} into {{ project_root_folder }}"
+- name: "Git clone {{ project_git_url }} [{{ project_git_version }}] into {{ project_root_folder }}"
   ansible.builtin.git:
     repo: "{{ project_git_url }}"
     dest: "{{ project_root_folder }}"
