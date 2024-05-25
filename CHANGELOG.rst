@@ -4,6 +4,15 @@ community.fqcn\_migration Release Notes
 
 .. contents:: Topics
 
+v1.0.11
+=======
+
+Minor Changes
+-------------
+
+- Install pandoc from tarball `#17 <https://github.com/ansible-collections/community.fqcn_migration/pull/17>`_
+- bypass release if named TEST to allow testing the release process without pushing to the downstream repo `#16 <https://github.com/ansible-collections/community.fqcn_migration/pull/16>`_
+
 v1.0.10
 =======
 
