@@ -27,3 +27,4 @@ excluded_roles_from_downstream: []
 case_insensitive_match: False
 # set to true to only replace literal "namespace.name"
 plugin_replacement_strict: False
+pandoc_binary: /usr/bin/pandoc
