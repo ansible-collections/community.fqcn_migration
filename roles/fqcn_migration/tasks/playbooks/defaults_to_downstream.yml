@@ -13,7 +13,7 @@
 
 - name: "Include playbook if exists"
   block:
-    #TODO check that file exists on controller would be nicer
+    # TODO check that file exists on controller would be nicer
     - name: "Attempt to run default to downstream playbook for {{ downstream_collection_name }}."
       ansible.builtin.include_tasks: "playbooks/defaults_to_downstream/{{ downstream_collection_name }}.yml"
   rescue:

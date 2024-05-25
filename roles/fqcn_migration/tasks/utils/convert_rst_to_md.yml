@@ -8,17 +8,43 @@
       ansible.builtin.debug:
         msg: "File `{{ path_to_file }}` not found."
 
-- name: "Convert {{ path_to_file }} to markdown"
+- name: Check pandoc is present
+  ansible.builtin.command: "{{ pandoc_binary }} -v"
+  register: which_pandoc
+  failed_when: false
+
+- name: Install pandoc because missing
+  when: which_pandoc.rc == 2
   block:
-    - name: Ensure pandoc is present
-      ansible.builtin.package:
-        name: pandoc
-      become: true
-    - name: Run pandoc to convert file format
-      changed_when: true
-      ansible.builtin.command: >
-        pandoc --from=rst --to=markdown_strict -o {{ path_to_file | regex_replace('[.]rst$', '.md')}} {{ path_to_file }}
+    - name: Install pandoc
+      block:
+        - name: Install package
+          become: true
+          ansible.builtin.package:
+            name: pandoc
+      rescue:
+        - name: Download pandoc tarball
+          become: true
+          ansible.builtin.unarchive:
+            src: 'https://github.com/jgm/pandoc/releases/download/3.2/pandoc-3.2-linux-amd64.tar.gz'
+            dest: "{{ pandoc_binary }}"
+            extra_opts: ['pandoc-3.2/bin/pandoc']
+          register: extract
+          failed_when:
+            - extract.extract_results.rc != 0
   rescue:
     - name: "Inform user"
       ansible.builtin.debug:
-        msg: "Error running conversion rst->md with pandoc."
+        msg: "Error installing pandoc, no rst -> md conversions."
+
+- name: Run pandoc to convert file format
+  block:
+    - name: Run pandoc to convert file format
+      ansible.builtin.command: >
+        {{ pandoc_binary }} --from=rst --to=markdown_strict -o {{ path_to_file | regex_replace('[.]rst$', '.md') }} {{ path_to_file }}
+      args:
+        creates: "{{ path_to_file | regex_replace('[.]rst$', '.md') }}"
+  rescue:
+    - name: "Inform user"
+      ansible.builtin.debug:
+        msg: "Error running pandoc, no rst -> md conversions."

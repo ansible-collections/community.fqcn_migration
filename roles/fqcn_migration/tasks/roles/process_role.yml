@@ -39,7 +39,7 @@
     - fqcn_migration_strict_role_name is defined
     - fqcn_migration_strict_role_name
     - to_fix is defined
-#TODO fix logic above
+# TODO fix logic above
 
 - name: "Define downstream rolename"
   ansible.builtin.set_fact:

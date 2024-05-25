@@ -22,7 +22,7 @@
     path: "{{ downstream_galaxy_yml }}"
     regexp: "{{ item.regexp }}"
     replace: "{{ item.replace }}"
-    #validate: "python -c 'import yaml, sys; print(yaml.safe_load(sys.stdin))'"
+    # validate: "python -c 'import yaml, sys; print(yaml.safe_load(sys.stdin))'"
   loop:
     - { regexp: "^(namespace: ).*$", replace: "\\1{{ downstream_namespace }}" }
     - { regexp: "^(name: ).*$", replace: "\\1{{ downstream_name }}" }
