@@ -11,9 +11,10 @@
 - name: Check pandoc is present
   ansible.builtin.command: "{{ pandoc_binary }} -v"
   register: which_pandoc
+  failed_when: false
 
-- name: "Install pandoc "
-  when: which_pandoc.rc == 127
+- name: Install pandoc because missing
+  when: which_pandoc.rc == 2
   block:
     - name: Install pandoc
       block:
@@ -37,6 +38,13 @@
         msg: "Error installing pandoc, no rst -> md conversions."
 
 - name: Run pandoc to convert file format
-  changed_when: true
-  ansible.builtin.command: >
-    {{ pandoc_binary }} --from=rst --to=markdown_strict -o {{ path_to_file | regex_replace('[.]rst$', '.md')}} {{ path_to_file }}
+  block:
+    - name: Run pandoc to convert file format
+      ansible.builtin.command: >
+        {{ pandoc_binary }} --from=rst --to=markdown_strict -o {{ path_to_file | regex_replace('[.]rst$', '.md') }} {{ path_to_file }}
+      args:
+        creates: "{{ path_to_file | regex_replace('[.]rst$', '.md') }}"
+  rescue:
+    - name: "Inform user"
+      ansible.builtin.debug:
+        msg: "Error running pandoc, no rst -> md conversions."
