@@ -40,4 +40,3 @@
   changed_when: true
   ansible.builtin.command: >
     {{ pandoc_binary }} --from=rst --to=markdown_strict -o {{ path_to_file | regex_replace('[.]rst$', '.md')}} {{ path_to_file }}
-

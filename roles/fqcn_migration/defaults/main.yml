@@ -14,9 +14,9 @@ skip_setup: True
 post_processors_replacements: []
 # maps internal dependencies that were processed by fqcn_migration
 upstream_downstream_collections_map: []
-#upstream_downstream_collections_map:
-#  - { upstream_name: 'some_upstream_name', downstream_name: 'new_name' }
-#  - { upstream_name: 'some_other_upstream_name', downstream_name: 'new_name' }
+# upstream_downstream_collections_map:
+#   - { upstream_name: 'some_upstream_name', downstream_name: 'new_name' }
+#   - { upstream_name: 'some_other_upstream_name', downstream_name: 'new_name' }
 
 # anything inside <!--start {{ downstream_placeholder_delete }} --> and <!--end {{ downstream_placeholder_delete }} --> will be removed
 downstream_placeholder_delete: []

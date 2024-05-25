@@ -16,7 +16,7 @@
     path: "{{ path_to_file }}"
     regexp: "{{ '(?i)' + upstream_value if case_insensitive_match else upstream_value }}"
     replace: "{{ downstream_value }}"
-    #validate: "python -c 'import yaml, sys; print(yaml.safe_load(sys.stdin))'"
+    # validate: "python -c 'import yaml, sys; print(yaml.safe_load(sys.stdin))'"
   when:
     - path_to_file is exists
     - upstream_value != downstream_value
