@@ -10,7 +10,9 @@
 
 - name: "Slurp galaxy collection version"
   ansible.builtin.set_fact:
-    galaxy_version: "{{ override_galaxy_version | default((galaxy_yml.content | b64decode | from_yaml)['version'], true) }}"
+    galaxy_version: "{{ override_galaxy_version \
+                      | default(git_describe_version \
+                      | default((galaxy_yml.content | b64decode | from_yaml)['version'], true), true) }}"
 
 - name: "Copy galaxy.yml from {{ upstream_project }} to {{ downstream_project }}"
   ansible.builtin.copy:
