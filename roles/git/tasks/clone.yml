@@ -16,3 +16,16 @@
   retries: 3
   delay: 15
   until: not git_clone_res.failed
+
+- name: "Git clone {{ project_git_url }} [{{ project_git_version }}] into {{ project_root_folder }}"
+  ansible.builtin.command: git describe    # noqa command-instead-of-module
+  args:
+    chdir: "{{ project_root_folder }}"
+  changed_when: false
+  failed_when: false
+  register: git_describe_result
+  when: gitdescribe_galaxy_version
+  
+- name: "Set git_describe_version"
+  ansible.builtin.set_fact:  
+    git_describe_version: "{{ git_describe_result.stdout | default('') }}˝
