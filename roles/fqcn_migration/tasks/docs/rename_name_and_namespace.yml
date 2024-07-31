@@ -19,3 +19,13 @@
   vars:
     upstream_value: "{{ upstream_namespace }}"
     downstream_value: "{{ downstream_namespace }}"
+
+- name: Revert false positive matches
+  ansible.builtin.include_tasks: utils/rename_vars_in_file.yml
+  vars:
+    upstream_value: "{{ string.match }}"
+    downstream_value: "{{ string.replace }}"
+  loop: "{{ post_processors_replacements | default([]) }}"
+  loop_control:
+    loop_var: string
+  when: string.file is not defined or path_to_file is regex(string.file)
