@@ -15,3 +15,4 @@ jobs:
     with:
       fqcn: 'community/fqcn_migration'
       collection_fqcn: 'community.fqcn_migration'
+      historical_docs: 'false'

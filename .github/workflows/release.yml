@@ -2,11 +2,16 @@
 name: Release collection
 on:
   workflow_dispatch:
+    inputs:
+      release_summary:
+        description: 'Optional release summary for changelogs'
+        required: false
 
 jobs:
   release:
     uses: ansible-middleware/github-actions/.github/workflows/release.yml@main
     with:
       collection_fqcn: 'community.fqcn_migration'
+      release_summary: "${{ github.event.inputs.release_summary }}"
     secrets:
       galaxy_token: ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
