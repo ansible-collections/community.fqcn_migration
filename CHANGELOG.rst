@@ -4,6 +4,19 @@ community.fqcn\_migration Release Notes
 
 .. contents:: Topics
 
+v1.0.12
+=======
+
+Minor Changes
+-------------
+
+- New parameter gitdescribe_galaxy_version `#18 <https://github.com/ansible-collections/community.fqcn_migration/pull/18>`_
+
+Bugfixes
+--------
+
+- Revert matches also applies to docs directory `#19 <https://github.com/ansible-collections/community.fqcn_migration/pull/19>`_
+
 v1.0.11
 =======
 

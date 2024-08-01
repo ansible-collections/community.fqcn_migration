@@ -38,6 +38,20 @@ releases:
     - 16.yaml
     - 17.yaml
     release_date: '2024-05-25'
+  1.0.12:
+    changes:
+      bugfixes:
+      - 'Revert matches also applies to docs directory `#19 <https://github.com/ansible-collections/community.fqcn_migration/pull/19>`_
+
+        '
+      minor_changes:
+      - 'New parameter gitdescribe_galaxy_version `#18 <https://github.com/ansible-collections/community.fqcn_migration/pull/18>`_
+
+        '
+    fragments:
+    - 18.yaml
+    - 19.yaml
+    release_date: '2024-08-01'
   1.0.2:
     changes:
       bugfixes:
