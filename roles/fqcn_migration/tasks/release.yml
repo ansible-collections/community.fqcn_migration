@@ -57,5 +57,5 @@
     tasks_from: push.yml
   vars:
     remote_name: downstream
-    local_branch: main
+    local_branch: "{{ tag }}"
     remote_branch: "{{ tag }}"
