@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
@@ -6,19 +8,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>community.fqcn_migration Release Notes &mdash; Ansible FQCN Migration project  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/ansible-basic-sphinx-ext.css" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -58,7 +56,8 @@
 <p class="caption" role="heading"><span class="caption-text">General</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#v1-0-12-devel">v1.0.12-devel</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#v1-0-13-devel">v1.0.13-devel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-0-12">v1.0.12</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#minor-changes">Minor Changes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#bugfixes">Bugfixes</a></li>
 </ul>
@@ -129,73 +128,77 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="#community-fqcn-migration-release-notes" id="id18">community.fqcn_migration Release Notes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#v1-0-12-devel" id="id19">v1.0.12-devel</a></p>
+<li><p><a class="reference internal" href="#v1-0-13-devel" id="id19">v1.0.13-devel</a></p></li>
+<li><p><a class="reference internal" href="#v1-0-12" id="id20">v1.0.12</a></p>
 <ul>
-<li><p><a class="reference internal" href="#minor-changes" id="id20">Minor Changes</a></p></li>
-<li><p><a class="reference internal" href="#bugfixes" id="id21">Bugfixes</a></p></li>
+<li><p><a class="reference internal" href="#minor-changes" id="id21">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#bugfixes" id="id22">Bugfixes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-0-11" id="id22">v1.0.11</a></p>
+<li><p><a class="reference internal" href="#v1-0-11" id="id23">v1.0.11</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id3" id="id23">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id24">Minor Changes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-0-10" id="id24">v1.0.10</a></p>
+<li><p><a class="reference internal" href="#v1-0-10" id="id25">v1.0.10</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id6" id="id25">Bugfixes</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id26">Bugfixes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-0-9" id="id26">v1.0.9</a></p>
+<li><p><a class="reference internal" href="#v1-0-9" id="id27">v1.0.9</a></p>
 <ul>
-<li><p><a class="reference internal" href="#release-summary" id="id27">Release Summary</a></p></li>
+<li><p><a class="reference internal" href="#release-summary" id="id28">Release Summary</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-0-8" id="id28">v1.0.8</a></p>
+<li><p><a class="reference internal" href="#v1-0-8" id="id29">v1.0.8</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id8" id="id29">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id30">Minor Changes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-0-7" id="id30">v1.0.7</a></p>
+<li><p><a class="reference internal" href="#v1-0-7" id="id31">v1.0.7</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id11" id="id31">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id32">Minor Changes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-0-6" id="id32">v1.0.6</a></p></li>
-<li><p><a class="reference internal" href="#v1-0-4" id="id33">v1.0.4</a></p></li>
-<li><p><a class="reference internal" href="#v1-0-2" id="id34">v1.0.2</a></p>
+<li><p><a class="reference internal" href="#v1-0-6" id="id33">v1.0.6</a></p></li>
+<li><p><a class="reference internal" href="#v1-0-4" id="id34">v1.0.4</a></p></li>
+<li><p><a class="reference internal" href="#v1-0-2" id="id35">v1.0.2</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id13" id="id35">Bugfixes</a></p></li>
+<li><p><a class="reference internal" href="#id13" id="id36">Bugfixes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-0-1" id="id36">v1.0.1</a></p>
+<li><p><a class="reference internal" href="#v1-0-1" id="id37">v1.0.1</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id15" id="id37">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id38">Minor Changes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-0-0" id="id38">v1.0.0</a></p></li>
+<li><p><a class="reference internal" href="#v1-0-0" id="id39">v1.0.0</a></p></li>
 </ul>
 </li>
 </ul>
 </nav>
-<section id="v1-0-12-devel">
-<h2><a class="toc-backref" href="#id19" role="doc-backlink">v1.0.12-devel</a><a class="headerlink" href="#v1-0-12-devel" title="Link to this heading"></a></h2>
+<section id="v1-0-13-devel">
+<h2><a class="toc-backref" href="#id19" role="doc-backlink">v1.0.13-devel</a><a class="headerlink" href="#v1-0-13-devel" title="Link to this heading"></a></h2>
+</section>
+<section id="v1-0-12">
+<h2><a class="toc-backref" href="#id20" role="doc-backlink">v1.0.12</a><a class="headerlink" href="#v1-0-12" title="Link to this heading"></a></h2>
 <section id="minor-changes">
-<h3><a class="toc-backref" href="#id20" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#minor-changes" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#minor-changes" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>New parameter gitdescribe_galaxy_version <a class="reference external" href="https://github.com/ansible-collections/community.fqcn_migration/pull/18">#18</a></p></li>
 </ul>
 </section>
 <section id="bugfixes">
-<h3><a class="toc-backref" href="#id21" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#bugfixes" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id22" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#bugfixes" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Revert matches also applies to docs directory <a class="reference external" href="https://github.com/ansible-collections/community.fqcn_migration/pull/19">#19</a></p></li>
 </ul>
 </section>
 </section>
 <section id="v1-0-11">
-<h2><a class="toc-backref" href="#id22" role="doc-backlink">v1.0.11</a><a class="headerlink" href="#v1-0-11" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id23" role="doc-backlink">v1.0.11</a><a class="headerlink" href="#v1-0-11" title="Link to this heading"></a></h2>
 <section id="id3">
-<h3><a class="toc-backref" href="#id23" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id24" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Install pandoc from tarball <a class="reference external" href="https://github.com/ansible-collections/community.fqcn_migration/pull/17">#17</a></p></li>
 <li><p>bypass release if named TEST to allow testing the release process without pushing to the downstream repo <a class="reference external" href="https://github.com/ansible-collections/community.fqcn_migration/pull/16">#16</a></p></li>
@@ -203,25 +206,25 @@
 </section>
 </section>
 <section id="v1-0-10">
-<h2><a class="toc-backref" href="#id24" role="doc-backlink">v1.0.10</a><a class="headerlink" href="#v1-0-10" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id25" role="doc-backlink">v1.0.10</a><a class="headerlink" href="#v1-0-10" title="Link to this heading"></a></h2>
 <section id="id6">
-<h3><a class="toc-backref" href="#id25" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id26" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Update replacement of bool argument specs <a class="reference external" href="https://github.com/ansible-collections/community.fqcn_migration/pull/15">#15</a></p></li>
 </ul>
 </section>
 </section>
 <section id="v1-0-9">
-<h2><a class="toc-backref" href="#id26" role="doc-backlink">v1.0.9</a><a class="headerlink" href="#v1-0-9" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id27" role="doc-backlink">v1.0.9</a><a class="headerlink" href="#v1-0-9" title="Link to this heading"></a></h2>
 <section id="release-summary">
-<h3><a class="toc-backref" href="#id27" role="doc-backlink">Release Summary</a><a class="headerlink" href="#release-summary" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id28" role="doc-backlink">Release Summary</a><a class="headerlink" href="#release-summary" title="Link to this heading"></a></h3>
 <p>Internal release, documentation or test changes only.</p>
 </section>
 </section>
 <section id="v1-0-8">
-<h2><a class="toc-backref" href="#id28" role="doc-backlink">v1.0.8</a><a class="headerlink" href="#v1-0-8" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id29" role="doc-backlink">v1.0.8</a><a class="headerlink" href="#v1-0-8" title="Link to this heading"></a></h2>
 <section id="id8">
-<h3><a class="toc-backref" href="#id29" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id30" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Add parameter plugin_replacement_strict <a class="reference external" href="https://github.com/ansible-collections/community.fqcn_migration/pull/13">#13</a></p></li>
 <li><p>Role parameters in README.md migrated using argument specs <a class="reference external" href="https://github.com/ansible-collections/community.fqcn_migration/pull/11">#11</a></p></li>
@@ -229,33 +232,33 @@
 </section>
 </section>
 <section id="v1-0-7">
-<h2><a class="toc-backref" href="#id30" role="doc-backlink">v1.0.7</a><a class="headerlink" href="#v1-0-7" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id31" role="doc-backlink">v1.0.7</a><a class="headerlink" href="#v1-0-7" title="Link to this heading"></a></h2>
 <section id="id11">
-<h3><a class="toc-backref" href="#id31" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id32" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Allow to match upstream names with case insensitive flag <a class="reference external" href="https://github.com/ansible-collections/community.fqcn_migration/pull/7">#7</a></p></li>
 </ul>
 </section>
 </section>
 <section id="v1-0-6">
-<h2><a class="toc-backref" href="#id32" role="doc-backlink">v1.0.6</a><a class="headerlink" href="#v1-0-6" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id33" role="doc-backlink">v1.0.6</a><a class="headerlink" href="#v1-0-6" title="Link to this heading"></a></h2>
 </section>
 <section id="v1-0-4">
-<h2><a class="toc-backref" href="#id33" role="doc-backlink">v1.0.4</a><a class="headerlink" href="#v1-0-4" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id34" role="doc-backlink">v1.0.4</a><a class="headerlink" href="#v1-0-4" title="Link to this heading"></a></h2>
 </section>
 <section id="v1-0-2">
-<h2><a class="toc-backref" href="#id34" role="doc-backlink">v1.0.2</a><a class="headerlink" href="#v1-0-2" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id35" role="doc-backlink">v1.0.2</a><a class="headerlink" href="#v1-0-2" title="Link to this heading"></a></h2>
 <section id="id13">
-<h3><a class="toc-backref" href="#id35" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id36" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Fix multiple play executions <a class="reference external" href="https://github.com/ansible-collections/community.fqcn_migration/pull/4">#4</a></p></li>
 </ul>
 </section>
 </section>
 <section id="v1-0-1">
-<h2><a class="toc-backref" href="#id36" role="doc-backlink">v1.0.1</a><a class="headerlink" href="#v1-0-1" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id37" role="doc-backlink">v1.0.1</a><a class="headerlink" href="#v1-0-1" title="Link to this heading"></a></h2>
 <section id="id15">
-<h3><a class="toc-backref" href="#id37" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id38" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Add logic to exclude some roles from downstream collection <a class="reference external" href="https://github.com/ansible-collections/community.fqcn_migration/pull/1">#1</a></p></li>
 <li><p>Simplify conditional logic for release <a class="reference external" href="https://github.com/ansible-collections/community.fqcn_migration/pull/3">#3</a></p></li>
@@ -263,7 +266,7 @@
 </section>
 </section>
 <section id="v1-0-0">
-<h2><a class="toc-backref" href="#id38" role="doc-backlink">v1.0.0</a><a class="headerlink" href="#v1-0-0" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id39" role="doc-backlink">v1.0.0</a><a class="headerlink" href="#v1-0-0" title="Link to this heading"></a></h2>
 </section>
 </section>
 
