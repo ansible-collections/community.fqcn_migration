@@ -1,7 +1,7 @@
 ---
 namespace: community
 name: fqcn_migration
-version: "1.0.14"
+version: "1.0.15"
 readme: README.md
 authors:
   - Romain Pelisse <belaran@redhat.com>
