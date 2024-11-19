@@ -4,6 +4,14 @@ community.fqcn\_migration Release Notes
 
 .. contents:: Topics
 
+v1.0.14
+=======
+
+Bugfixes
+--------
+
+- Add missing replacement of overridden galaxy versions `#22 <https://github.com/ansible-collections/community.fqcn_migration/pull/22>`_
+
 v1.0.13
 =======
 

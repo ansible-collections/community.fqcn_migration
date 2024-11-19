@@ -54,6 +54,15 @@ releases:
     release_date: '2024-08-01'
   1.0.13:
     release_date: '2024-10-31'
+  1.0.14:
+    changes:
+      bugfixes:
+      - 'Add missing replacement of overridden galaxy versions `#22 <https://github.com/ansible-collections/community.fqcn_migration/pull/22>`_
+
+        '
+    fragments:
+    - 22.yaml
+    release_date: '2024-11-19'
   1.0.2:
     changes:
       bugfixes:
