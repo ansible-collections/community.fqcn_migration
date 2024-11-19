@@ -31,6 +31,13 @@
     # Replace in all other lines, except issues: and repository: as this would break repo links
     - { regexp: "^(\\w*: )((?<!issues: )|(?<!repository: )){{ upstream_namespace }}", replace: "\\1{{ downstream_namespace }}" }
 
+- name: "Replace galaxy version with {{ galaxy_version }}"
+  ansible.builtin.replace:
+    path: "{{ downstream_galaxy_yml }}"
+    regexp: "^version: .*"
+    replace: "{{ item }}: \"{{ galaxy_version }}\""
+  when: galaxy_version != (galaxy_yml.content | b64decode | from_yaml)['version']
+
 - name: "Replace galaxy.yml {{ item }}"
   ansible.builtin.replace:
     path: "{{ downstream_galaxy_yml }}"
