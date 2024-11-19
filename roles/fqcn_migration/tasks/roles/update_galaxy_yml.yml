@@ -35,7 +35,7 @@
   ansible.builtin.replace:
     path: "{{ downstream_galaxy_yml }}"
     regexp: "^version: .*"
-    replace: "{{ item }}: \"{{ galaxy_version }}\""
+    replace: "version: \"{{ galaxy_version }}\""
   when: galaxy_version != (galaxy_yml.content | b64decode | from_yaml)['version']
 
 - name: "Replace galaxy.yml {{ item }}"
